@@ -347,6 +347,9 @@
   var formSuccess = $('#formSuccess');
   var formStatus = $('#formStatus');
   var phone = $('#phone');
+  var optionalConsent = $('#optionalConsent');
+  // 선택 동의 UI가 없는 경우 선택 정보는 전송하지 않습니다.
+  function hasOptionalConsent() { return !!(optionalConsent && optionalConsent.checked); }
 
   var LABELS = { org: '기관명', name: '담당자명', phone: '연락처', email: '이메일', type: '문의 유형', target: '연수 대상', topic: '희망 주제', headcount: '예상 인원', schedule: '희망 일정', message: '상세 내용' };
   var PHONE_RE = /^(0\d{1,2})-?(\d{3,4})-?(\d{4})$/;
@@ -383,7 +386,7 @@
   }
 
   function validateField(input) {
-    if (input.id === 'phone' && !$('#optionalConsent').checked) { clearError(input); return true; }
+    if (input.id === 'phone' && !hasOptionalConsent()) { clearError(input); return true; }
     var v = (input.value || '').trim();
     var msg = '';
     switch (input.id) {
@@ -416,7 +419,7 @@
   function collect() {
     var data = {};
     Object.keys(LABELS).forEach(function (id) {
-      if (!$('#optionalConsent').checked && optionalIds.indexOf(id) !== -1) return;
+      if (!hasOptionalConsent() && optionalIds.indexOf(id) !== -1) return;
       var el = document.getElementById(id);
       data[id] = el ? el.value.trim() : '';
     });
@@ -437,7 +440,7 @@
   var submissionId = '';
   var submissionFingerprint = '';
   var submitBtn = $('#submitBtn');
-  $('#optionalConsent').addEventListener('change', function () { validateField(phone); });
+  if (optionalConsent) optionalConsent.addEventListener('change', function () { validateField(phone); });
   var copyBtn = $('#copyBtn');
   var copyStatus = $('#copyStatus');
 
@@ -462,7 +465,7 @@
     }
 
     var d = collect();
-    var fingerprint = JSON.stringify(d) + ':' + $('#optionalConsent').checked;
+    var fingerprint = JSON.stringify(d) + ':' + hasOptionalConsent();
     if (fingerprint !== submissionFingerprint || !submissionId) {
       submissionFingerprint = fingerprint;
       submissionId = window.createInquiryId();
@@ -470,7 +473,7 @@
     var payload = Object.assign({}, d, {
       request_id: submissionId,
       consent_required: true,
-      consent_optional: $('#optionalConsent').checked,
+      consent_optional: hasOptionalConsent(),
       consent_overseas_transfer: true,
       consent_version: CFG.privacyVersion,
       _gotcha: $('#website').value
