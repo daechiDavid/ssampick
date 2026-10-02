@@ -126,6 +126,11 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .hero-credit-label { padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3); font-size: 13px; }
 .hero-credit strong { color: #fff; }
 
+@media (min-width: 961px) {
+  .hero-img { left: 0; width: 120%; max-width: none; transform: none; }
+  .hero-content { transform: translateX(clamp(-86px, -4.5vw, -20px)); }
+}
+
 /* ---------- Stats (히어로 하단 오버랩 카드) ---------- */
 .stats { position: relative; z-index: 2; margin-top: -84px; }
 .stats-card { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 24px 60px -30px rgba(0,47,95,.35); overflow: hidden; }
@@ -144,15 +149,17 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .about { padding-top: 110px; }
 .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: start; }
 .about-sticky { position: sticky; top: calc(var(--header-h) + 32px); }
-.process-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 36px; }
-.process-bar li { position: relative; padding: 16px 16px 16px; background: var(--paper); border-radius: var(--radius-sm); border-top: 3px solid var(--green); font-weight: 700; font-size: 15px; color: var(--navy-ink); }
-.process-bar li span { display: block; font-size: 13px; color: var(--green-deep); margin-bottom: 6px; letter-spacing: .05em; }
 .about-intro h3 { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
 .about-intro p { color: var(--ink-2); font-size: 16px; }
-.service-list { margin-top: 26px; border-top: 1px solid var(--line); }
-.service-list li { display: flex; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid var(--line); }
-.service-list .no { font-size: 13px; font-weight: 800; color: var(--green-deep); letter-spacing: .05em; min-width: 26px; }
-.service-list p { font-size: 16px; font-weight: 600; color: var(--ink); }
+.about-services { margin-top: 26px; border-top: 1px solid var(--line); }
+.about-service { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.about-service h4 { font-size: 17px; font-weight: 800; color: var(--navy-ink); }
+.about-service > ul { margin-top: 10px; padding-left: 20px; list-style: disc; }
+.about-service > ul > li { padding: 3px 0; font-size: 16px; color: var(--ink-2); }
+.about-services + .link-arrow { margin-top: 20px; }
+.about-philosophy { margin-top: 32px; padding: 24px; background: var(--paper); border-left: 3px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.about-philosophy h3 { font-size: 18px; font-weight: 800; color: var(--navy-ink); margin-bottom: 10px; }
+.about-philosophy p { font-size: 16px; line-height: 1.8; color: var(--ink-2); }
 
 /* ---------- Strengths ---------- */
 .strengths { background: var(--paper); }
@@ -243,6 +250,7 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .faq-item summary::after { content: ""; width: 10px; height: 10px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .25s; flex-shrink: 0; margin-left: auto; }
 .faq-item[open] summary::after { transform: rotate(-135deg); }
 .faq-answer { padding: 0 24px 22px 50px; font-size: 15px; line-height: 1.8; color: var(--ink-2); }
+.faq-answer a { color: var(--navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- Contact ---------- */
 .contact { background: var(--paper); }
@@ -326,6 +334,12 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .dialog-case .dialog-body { padding: 32px 36px 36px; }
 .dialog-case .case-kicker { margin-bottom: 8px; }
 .dialog-case .facts { margin-top: 20px; }
+.dialog-case .case-programs { margin-top: 20px; }
+.dialog-case .case-program-list { display: grid; gap: 14px; padding: 0; list-style: none; }
+.dialog-case .case-program-list li { display: grid; gap: 4px; padding-left: 14px; border-left: 2px solid var(--line); }
+.dialog-case .case-program-meta { color: var(--green-deep); font-size: 13px; font-weight: 700; }
+.dialog-case .case-program-list strong { color: var(--navy-ink); font-size: 14px; }
+.dialog-case .case-program-list p { font-size: 14px; line-height: 1.65; }
 .dialog-case .dialog-small { margin-top: 14px; font-size: 13px; color: var(--muted); }
 .dialog-case .btn { margin-top: 22px; }
 .policy-date { margin-top: 20px; font-size: 14px; }
@@ -399,7 +413,6 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
   .stat-num .approx { font-size: 13px; }
   .stat-label { font-size: 13px; }
   .stat-badge .stat-label strong { font-size: 14px; }
-  .process-bar { grid-template-columns: 1fr 1fr; }
   .strength-grid { grid-template-columns: 1fr; }
   .case { grid-template-columns: 1fr; }
   .case-visual { flex-direction: row; justify-content: flex-start; padding: 16px 20px; }

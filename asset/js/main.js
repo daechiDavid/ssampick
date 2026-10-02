@@ -187,20 +187,26 @@
       title: 'AI미래교육박람회 기획·운영',
       image: { src: 'asset/img/expo-stage-1280.webp', alt: "박람회 메인 무대. '교실을 바꾸는 AI미래교육' 특강회 화면과 AI미래교육연구회·쌤픽에듀 로고." },
       body: [
-        'AI와 에듀테크를 주제로 40개 에듀테크 관련 기업과 약 1,500명의 교육 관계자가 참여한 박람회를 기획·운영했습니다.',
-        '기업 전시 및 체험, 교원 연수, 교육 사례 공유 등 다양한 프로그램으로 학교와 교사, 에듀테크 기업을 연결하는 교육 교류의 장을 마련했습니다.'
+        'AI와 에듀테크를 주제로 40개 에듀테크 기업이 참여하고 50개 부스를 운영해 총 1,546명이 방문한 박람회를 기획·운영했습니다.',
+        '기업 전시·체험, 교원 연수, 교육 사례 공유를 진행했으며, 당일 강연 수강생은 1,000명 이상이었습니다.'
       ],
-      facts: [['대상', '교원 · 교육 관계자 · 에듀테크 기업'], ['프로그램', '기업 전시·체험, 교원 연수, 교육 사례 공유'], ['운영 규모', '참여 기업 40개 · 참여 인원 약 1,500명'], ['운영 범위', '기업 전시·체험, 교원 연수, 교육 사례 공유']],
+      facts: [['일시', '2026년 6월 20일(토) 09:00~17:00'], ['장소', '숙명여자대학교 제2캠퍼스 눈꽃광장홀'], ['대상', '전국 유·초·중·고·대·특 교육 종사자'], ['운영 규모', '참여 기업 40개 · 부스 50개 · 방문 1,546명 · 강연 수강 1,000명 이상']],
       inquiry: '교육행사 운영'
     },
     physical: {
       kicker: '학생 AI 체험',
-      title: '남한고등학교 학생 대상 피지컬 AI 체험 및 AI 해커톤',
+      title: 'AI·디지털 캠프 ‘남한 미래 챌린지’',
       body: [
-        '다양한 로봇과 LEGO AI 등을 활용한 4개 섹션의 체험형 프로그램을 구성했습니다.',
-        '학생들이 직접 문제를 해결하고 결과물을 만들어보는 AI 해커톤을 함께 운영해, 체험에서 창작으로 이어지는 경험을 제공했습니다.'
+        '2026년 7월 4일 남한고등학교에서 ‘남한 미래 챌린지’를 운영했습니다. 신청 학생은 69명이었습니다.',
+        '오전에는 AI 자율주행과 생성형 AI 메이커톤, 오후에는 LEGO CS & AI와 로보틱스를 진행했습니다.'
       ],
-      facts: [['대상', '남한고등학교 학생'], ['프로그램', '로봇·LEGO AI 체험 4개 섹션 + AI 해커톤'], ['운영 범위', '프로그램 설계, 강사 운영, 현장 운영']],
+      facts: [['일시', '2026년 7월 4일(토) 09:00~16:00'], ['장소', '남한고등학교 제1·제2과학실'], ['대상', '신청 학생 69명']],
+      programs: [
+        { time: '오전 · 참여 30명', title: 'AI 자율주행차 부트 캠프', description: '초음파 센서와 메카넘휠 제어로 AI 자율주행 원리를 배우고 코딩 미션을 수행했습니다.' },
+        { time: '오전 · 참여 30명', title: '뚝딱 AI 메이커톤: 생각을 작품으로', description: '생성형 AI 활용법을 배우고 일상 문제를 해결하는 결과물을 제작·발표하는 PBL 활동을 진행했습니다.' },
+        { time: '오후 · 참여 27명', title: '레고 에듀케이션 CS & AI', description: 'AI 비전 센서를 학습시키고 로봇 제어 로직을 배우며 자율주행의 핵심 원리를 탐구했습니다.' },
+        { time: '오후 · 참여 30명', title: '메카트로닉스 시스템을 활용한 로보틱스', description: '산업 현장의 자동화 기기를 제작하며 작동 원리를 배우고 로보틱스로 문제를 해결했습니다.' }
+      ],
       note: '현장 사진은 학생 초상권 공개 동의 확인 후 게재 예정입니다.',
       inquiry: '학생 AI 체험'
     },
@@ -256,6 +262,13 @@
     html += '<dl class="facts">';
     c.facts.forEach(function (f) { html += '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; });
     html += '</dl>';
+    if (c.programs && c.programs.length) {
+      html += '<section class="case-programs"><h3>프로그램별 구성</h3><ol class="case-program-list">';
+      c.programs.forEach(function (program) {
+        html += '<li><span class="case-program-meta">' + esc(program.time) + '</span><strong>' + esc(program.title) + '</strong><p>' + esc(program.description) + '</p></li>';
+      });
+      html += '</ol></section>';
+    }
     if (c.note) html += '<p class="dialog-small">' + esc(c.note) + '</p>';
     html += '<button type="button" class="btn btn-primary" data-case-inquiry="' + esc(c.inquiry) + '">비슷한 프로그램 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>';
     html += '</div>';
