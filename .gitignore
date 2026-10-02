@@ -1,0 +1,5 @@
+# Google Apps Script deployment files and local clasp settings
+/apps-script/
+.clasp.json
+.clasprc.json
+README.md

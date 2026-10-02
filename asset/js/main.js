@@ -9,6 +9,15 @@
   CFG.inquiryEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((CFG.inquiryEmail || '').trim()) ? CFG.inquiryEmail.trim() : '';
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+  var transferFields = ['name', 'contact', 'countries', 'items', 'timing', 'method', 'purpose', 'retention'];
+  var transfers = Array.isArray(CFG.transferRecipients) ? CFG.transferRecipients : [];
+  var transferReady = transfers.length >= 1 && transfers.every(function (r) {
+    return r && transferFields.every(function (key) { return typeof r[key] === 'string' && r[key].trim(); });
+  });
+  var endpointReady = /^https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/exec$/.test(CFG.inquiryEndpoint || '');
+  var receptionReady = endpointReady && !!CFG.inquiryEmail && CFG.privacyReviewed === true && transferReady &&
+    !!CFG.privacyOfficerName && !!CFG.privacyOfficerRole && !!CFG.privacyEffectiveDate &&
+    !!CFG.privacyVersion && !/draft/i.test(CFG.privacyVersion);
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var headerH = function () { return $('#siteHeader').offsetHeight || 72; };
 
@@ -315,6 +324,20 @@
       pd.textContent = '시행일: ' + CFG.privacyEffectiveDate;
       pd.hidden = false;
     }
+    if (CFG.privacyOfficerName && CFG.privacyOfficerRole) {
+      $('#privacyOfficer').textContent = CFG.privacyOfficerName + ' / ' + CFG.privacyOfficerRole;
+    }
+    $('#policyDraftNotice').hidden = receptionReady;
+    if (transferReady) {
+      var labels = ['이전받는 자', '연락처', '이전 국가', '이전 항목', '이전 시기', '이전 방법', '이용 목적', '보유·이용 기간'];
+      $$('[data-transfer-details]').forEach(function (container) {
+        container.innerHTML = transfers.map(function (r) {
+          return '<dl class="privacy-summary">' + transferFields.map(function (key, i) {
+            return '<div><dt>' + labels[i] + '</dt><dd>' + esc(r[key]) + '</dd></div>';
+          }).join('') + '</dl>';
+        }).join('');
+      });
+    }
     $('#year').textContent = String(new Date().getFullYear());
   })();
 
@@ -360,6 +383,7 @@
   }
 
   function validateField(input) {
+    if (input.id === 'phone' && !$('#optionalConsent').checked) { clearError(input); return true; }
     var v = (input.value || '').trim();
     var msg = '';
     switch (input.id) {
@@ -373,22 +397,26 @@
         else if (!EMAIL_RE.test(v)) msg = '이메일 형식을 확인해 주세요. 예) name@school.kr';
         break;
       case 'type': if (!v) msg = '문의 유형을 선택해 주세요.'; break;
-      case 'consent': if (!input.checked) msg = '문의서 작성 및 개인정보 안내를 확인해 주세요.'; break;
+      case 'consent': if (!input.checked) msg = '필수 개인정보 수집·이용에 동의해 주세요.'; break;
+      case 'transferConsent': if (!input.checked) msg = '문의 전송을 위한 국외 이전 동의를 확인해 주세요.'; break;
     }
     if (msg) setError(input, msg); else clearError(input);
     return !msg;
   }
 
-  var required = ['org', 'name', 'phone', 'email', 'type', 'consent'].map(function (id) { return document.getElementById(id); });
+  var required = ['org', 'name', 'phone', 'email', 'type', 'consent', 'transferConsent'].map(function (id) { return document.getElementById(id); });
   required.forEach(function (input) {
     var ev = (input.tagName === 'SELECT' || input.type === 'checkbox') ? 'change' : 'blur';
     input.addEventListener(ev, function () { validateField(input); });
     input.addEventListener('input', function () { if (input.getAttribute('aria-invalid')) validateField(input); });
   });
 
+  var optionalIds = ['phone', 'target', 'topic', 'headcount', 'schedule', 'message'];
+
   function collect() {
     var data = {};
     Object.keys(LABELS).forEach(function (id) {
+      if (!$('#optionalConsent').checked && optionalIds.indexOf(id) !== -1) return;
       var el = document.getElementById(id);
       data[id] = el ? el.value.trim() : '';
     });
@@ -405,7 +433,11 @@
   }
 
   var lastText = '';
-  var mailBtn = $('#mailBtn');
+  var submitting = false;
+  var submissionId = '';
+  var submissionFingerprint = '';
+  var submitBtn = $('#submitBtn');
+  $('#optionalConsent').addEventListener('change', function () { validateField(phone); });
   var copyBtn = $('#copyBtn');
   var copyStatus = $('#copyStatus');
 
@@ -414,14 +446,14 @@
     formBody.hidden = false;
   }
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    if ($('#website').value) { return; } // honeypot: 봇 입력 시 조용히 무시
+    if (submitting || !receptionReady) return;
+    if ($('#website').value) return;
 
     var firstBad = null;
     required.forEach(function (input) {
-      var ok = validateField(input);
-      if (!ok && !firstBad) firstBad = input;
+      if (!validateField(input) && !firstBad) firstBad = input;
     });
     if (firstBad) {
       formStatus.textContent = '입력 내용을 확인해 주세요. ' + (errorEl(firstBad) ? errorEl(firstBad).textContent : '');
@@ -430,32 +462,50 @@
     }
 
     var d = collect();
-    lastText = buildText(d);
-
-    var summary = $('#summary');
-    summary.innerHTML = Object.keys(LABELS).filter(function (id) { return d[id]; }).map(function (id) {
-      return '<div><dt>' + esc(LABELS[id]) + '</dt><dd>' + esc(d[id]) + '</dd></div>';
-    }).join('');
-
-    var desc = $('#successDesc');
-    if (CFG.inquiryEmail) {
-      var href = 'mailto:' + encodeURIComponent(CFG.inquiryEmail) +
-        '?subject=' + encodeURIComponent('[연수 문의] ' + d.org + ' · ' + d.type) +
-        '&body=' + encodeURIComponent(lastText);
-      mailBtn.href = href;
-      mailBtn.hidden = false;
-      desc.textContent = '아직 발송되지 않았습니다. 아래 내용을 확인한 뒤 이메일 작성하기를 선택해 직접 발송하세요. 문의서 저장과 복사도 가능합니다.';
-
-    } else {
-      mailBtn.hidden = true;
-      desc.textContent = '아직 문의 수신 이메일이 연결되지 않아 접수되지 않았습니다. 작성한 내용을 파일로 저장하거나 복사할 수 있습니다.';
+    var fingerprint = JSON.stringify(d) + ':' + $('#optionalConsent').checked;
+    if (fingerprint !== submissionFingerprint || !submissionId) {
+      submissionFingerprint = fingerprint;
+      submissionId = window.createInquiryId();
     }
-
-    copyStatus.textContent = '';
-    formBody.hidden = true;
-    formSuccess.hidden = false;
-    formStatus.textContent = '문의 내용이 준비되었습니다.';
-    $('#successTitle').focus();
+    var payload = Object.assign({}, d, {
+      request_id: submissionId,
+      consent_required: true,
+      consent_optional: $('#optionalConsent').checked,
+      consent_overseas_transfer: true,
+      consent_version: CFG.privacyVersion,
+      _gotcha: $('#website').value
+    });
+    submitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '접수 중…';
+    form.setAttribute('aria-busy', 'true');
+    formStatus.textContent = '문의 내용을 전송하고 있습니다.';
+    try {
+      var result = await window.sendInquiryViaAppsScript(CFG.inquiryEndpoint, payload);
+      if (result.ok !== true) {
+        var failed = new Error(result.code || 'UNAVAILABLE');
+        if (result.code === 'UNKNOWN') failed.name = 'TimeoutError';
+        throw failed;
+      }
+      lastText = buildText(d);
+      $('#summary').innerHTML = Object.keys(LABELS).filter(function (id) { return d[id]; }).map(function (id) {
+        return '<div><dt>' + esc(LABELS[id]) + '</dt><dd>' + esc(d[id]) + '</dd></div>';
+      }).join('');
+      $('#successDesc').textContent = '문의 메일 발송 요청이 완료되었습니다. 담당자가 확인 후 입력하신 이메일로 연락드립니다.';
+      copyStatus.textContent = '';
+      formBody.hidden = true;
+      formSuccess.hidden = false;
+      $('#successTitle').focus();
+    } catch (err) {
+      formStatus.textContent = err.name === 'TimeoutError' || err instanceof TypeError ?
+        '접수 결과를 확인하지 못했습니다. 이미 전송됐을 수 있으므로 재접수 전 ij7404613@gmail.com으로 확인해 주세요. 입력 내용은 유지됩니다.' :
+        '접수를 완료하지 못했습니다. 입력 내용을 유지했습니다. 잠시 후 다시 시도하거나 ij7404613@gmail.com으로 문의해 주세요.';
+    } finally {
+      submitting = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = '문의하기';
+      form.removeAttribute('aria-busy');
+    }
   });
 
   copyBtn.addEventListener('click', function () {
@@ -489,12 +539,17 @@
     link.href = url; link.download = '쌤픽에듀_연수문의서.txt';
     document.body.appendChild(link); link.click(); link.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    copyStatus.textContent = '문의서를 저장했습니다. 문의가 자동 전송되지는 않습니다.';
+    copyStatus.textContent = '접수된 문의 내용의 사본을 기기에 저장했습니다.';
   });
-  $('#submitBtn').disabled = false;
-  if (CFG.inquiryEmail) $('#formNote').textContent = '작성 내용을 확인한 후 이메일 앱에서 직접 발송할 수 있습니다. 이 양식은 자동 전송되지 않습니다.';
+  submitBtn.disabled = !receptionReady;
+  $('#formNote').textContent = receptionReady ? '문의 내용은 담당자 이메일로 자동 전달됩니다. 별도의 메일 앱을 열지 않습니다.' : '자동 접수 연결을 준비 중입니다. 현재는 문의가 전송되지 않습니다. 문의: ' + CFG.inquiryEmail;
 
   $('#editBtn').addEventListener('click', function () {
+    form.reset();
+    submissionId = '';
+    submissionFingerprint = '';
+    required.forEach(clearError);
+    formStatus.textContent = '';
     showForm();
     $('#org').focus();
   });

@@ -418,7 +418,7 @@
           </details>
           <details class="faq-item">
             <summary>문의 후 진행 절차는 어떻게 되나요?</summary>
-            <div class="faq-answer"><p>대상·주제·인원·일정을 바탕으로 필요한 연수의 방향을 구상합니다. 아직 정해지지 않은 내용은 비워 두거나 “협의 필요”로 적으세요. 현재 양식은 문의서를 작성·저장하는 기능이며 자동 접수되지는 않습니다.</p></div>
+            <div class="faq-answer"><p>대상·주제·인원·일정을 바탕으로 필요한 연수의 방향을 구상합니다. 아직 정해지지 않은 내용은 비워 두거나 “협의 필요”로 적으세요. 문의가 접수되면 담당자가 내용을 확인하고 입력하신 이메일로 상담을 이어갑니다.</p></div>
           </details>
         </div>
       </div>
@@ -444,7 +444,7 @@
 
           <form class="contact-form reveal" id="inquiryForm" novalidate>
             <div class="form-body" id="formBody">
-              <p class="form-status sr-only" id="formStatus" aria-live="polite"></p>
+              <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
               <div class="form-row two">
                 <div class="field">
                   <label for="org">기관명 <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></label>
@@ -484,26 +484,26 @@
                   <p class="field-error" id="type-error" hidden></p>
                 </div>
                 <div class="field">
-                  <label for="target">연수 대상</label>
+                  <label for="target">연수 대상 <span>(선택)</span></label>
                   <input type="text" id="target" name="target" maxlength="60" placeholder="예) 초등 교원 / 고등학생 / 관리자">
                 </div>
               </div>
               <div class="form-row three">
                 <div class="field">
-                  <label for="topic">희망 주제</label>
+                  <label for="topic">희망 주제 <span>(선택)</span></label>
                   <input type="text" id="topic" name="topic" maxlength="120" placeholder="예) 생성형 AI 수업 활용">
                 </div>
                 <div class="field">
-                  <label for="headcount">예상 인원</label>
+                  <label for="headcount">예상 인원 <span>(선택)</span></label>
                   <input type="text" id="headcount" name="headcount" maxlength="20" inputmode="numeric" placeholder="예) 30명">
                 </div>
                 <div class="field">
-                  <label for="schedule">희망 일정</label>
+                  <label for="schedule">희망 일정 <span>(선택)</span></label>
                   <input type="text" id="schedule" name="schedule" maxlength="80" placeholder="예) 2026년 11월 중">
                 </div>
               </div>
               <div class="field">
-                <label for="message">상세 내용</label>
+                <label for="message">상세 내용 <span>(선택)</span></label>
                 <textarea id="message" name="message" rows="5" maxlength="2000" placeholder="연수 목적, 운영 방식(집합/온라인), 예산 범위 등 참고할 내용을 자유롭게 적어주세요."></textarea>
               </div>
               <!-- 스팸 방지용 숨김 필드 -->
@@ -514,26 +514,35 @@
               <div class="field consent">
                 <label class="check">
                   <input type="checkbox" id="consent" name="consent" required>
-                  <span>문의서 작성 및 개인정보 안내를 확인했습니다. <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></span>
+                  <span>[필수] 개인정보 수집·이용에 동의합니다. <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></span>
                 </label>
                 <button type="button" class="text-btn" data-open="privacyDialog">내용 보기</button>
                 <p class="field-error" id="consent-error" hidden></p>
               </div>
+              <!-- <div class="field consent">
+                <label class="check"><input type="checkbox" id="optionalConsent" name="optionalConsent"><span>[선택] 선택 정보 수집·이용에 동의합니다.</span></label>
+                <button type="button" class="text-btn" data-open="privacyDialog">내용 보기</button>
+                <p class="form-note consent-note">동의하지 않으면 선택 항목은 전송하지 않습니다. 필수 정보만으로 문의할 수 있습니다.</p>
+              </div> -->
+              <div class="field consent">
+                <label class="check"><input type="checkbox" id="transferConsent" name="transferConsent" required><span>[필수] 문의 전송을 위한 개인정보 국외 이전에 동의합니다.</span></label>
+                <button type="button" class="text-btn" data-open="transferDialog">내용 보기</button>
+                <p class="field-error" id="transferConsent-error" hidden></p>
+              </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn" disabled>문의 내용 확인하기</button>
-                <p class="form-note" id="formNote">현재는 문의 내용을 정리·저장하는 기능입니다. 작성한 내용은 자동 전송되지 않습니다.</p>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn" disabled>문의하기</button>
+                <p class="form-note" id="formNote">자동 접수 연결을 준비 중입니다. 현재는 문의가 전송되지 않습니다.</p>
               </div>
             </div>
 
             <div class="form-success" id="formSuccess" hidden>
-              <h3 id="successTitle" tabindex="-1">문의 내용이 준비되었습니다</h3>
+              <h3 id="successTitle" tabindex="-1">문의가 접수되었습니다</h3>
               <p id="successDesc"></p>
               <dl class="summary" id="summary"></dl>
               <div class="success-actions">
-                <a class="btn btn-primary" id="mailBtn" href="#" hidden>이메일 작성하기</a>
                 <button type="button" class="btn btn-outline" id="downloadBtn">문의서 저장 (.txt)</button>
                 <button type="button" class="btn btn-outline" id="copyBtn">문의 내용 복사</button>
-                <button type="button" class="btn btn-ghost-dark" id="editBtn">내용 수정</button>
+                <button type="button" class="btn btn-ghost-dark" id="editBtn">새 문의 작성</button>
               </div>
               <p class="copy-status" id="copyStatus" role="status"></p>
             </div>
@@ -585,7 +594,7 @@
       <div class="footer-bottom">
         <p class="biz" id="companyDetails"></p>
         <p class="legal">
-          <button type="button" class="text-btn" data-open="privacyDialog">개인정보 안내</button>
+          <button type="button" class="text-btn" data-open="privacyPolicyDialog">개인정보 처리방침</button>
           <span>© <span id="year">2026</span> SSAMPICK EDU. All rights reserved.</span>
         </p>
       </div>
@@ -610,20 +619,74 @@
     <div class="dialog-content" id="caseDialogContent"></div>
   </dialog>
 
-  <!-- 개인정보처리방침 -->
+  <!-- 수집·이용 동의: 핵심 정보 -->
   <dialog class="dialog dialog-text" id="privacyDialog" aria-labelledby="privacyTitle">
     <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
     <div class="dialog-content">
-      <h2 id="privacyTitle">문의서 작성 및 개인정보 안내</h2>
-      <p>이 양식은 작성한 내용을 이 페이지 안에서 정리합니다. 서버에 저장하거나 쌤픽에듀로 자동 전송하지 않습니다.</p>
-      <h3>작성하는 정보</h3><p>기관명, 담당자명, 이메일, 문의 유형 및 선택적으로 입력하는 연락처·연수 대상·주제·인원·일정·상세 내용입니다.</p>
-      <h3>저장과 전달</h3><p>문의서 저장을 선택하면 텍스트 파일이 기기에 저장됩니다. 복사를 선택하면 기기의 클립보드에 내용이 복사됩니다. 수신 이메일이 연결된 경우에만 이메일 작성 버튼이 표시되며, 실제 발송은 이메일 앱에서 직접 진행합니다.</p>
-      <h3>입력 내용 보존</h3><p>페이지를 닫거나 새로 고치면 작성 내용이 사라질 수 있습니다. 필요한 내용은 문의서로 저장해 주세요. 학생 개인정보나 민감한 정보는 입력하지 마세요.</p>
-      <p class="policy-note">실제 문의 수신을 시작할 때에는 확정된 운영 주체와 처리 방식에 맞는 개인정보 안내를 적용합니다.</p>
+      <h2 id="privacyTitle">개인정보 수집·이용 동의</h2>
+      <dl class="privacy-summary">
+        <div><dt>수집·이용 목적</dt><dd>연수·교육사업 문의 접수, 담당자 확인, 상담 및 회신. 선택 정보는 전화 상담과 맞춤 상담에 활용합니다.</dd></div>
+        <div><dt>필수 수집 항목</dt><dd>기관명, 담당자명, 이메일, 문의 유형. 접수 시 동의 여부·문서 버전·서버 접수 시각·접수 식별자를 함께 기록합니다.</dd></div>
+        <div><dt>선택 수집 항목</dt><dd>연락처, 연수 대상, 희망 주제, 예상 인원, 희망 일정, 상세 내용</dd></div>
+        <div><dt>보유·이용 기간</dt><dd><strong>문의 및 동의 기록은 상담 종료일부터 3개월(접수일부터 최대 1년)</strong>. 두 기간 중 먼저 도래하는 날까지 보관한 뒤 삭제합니다. 스팸·중복 방지용 임시 정보는 최대 10분 보관합니다. 동의 철회 또는 삭제 요청 시 법령상 보존 의무가 없는 정보는 지체 없이 삭제합니다.</dd></div>
+        <div><dt>동의 거부 권리</dt><dd>동의를 거부할 수 있습니다. 필수 항목에 동의하지 않으면 이 양식으로 접수할 수 없습니다.</dd></div>
+      </dl>
+      <p class="policy-note">학생 정보, 주민등록번호, 건강 정보 등 민감한 정보와 다른 사람의 개인정보는 입력하지 마세요. 상세 처리 내용은 하단의 개인정보 처리방침에서 확인할 수 있습니다.</p>
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog-text" id="transferDialog" aria-labelledby="transferTitle">
+    <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
+    <div class="dialog-content">
+      <h2 id="transferTitle">개인정보 국외 이전 동의</h2>
+      <p>문의 전송 시 Google Apps Script가 문의 내용을 처리하여 지정된 Gmail 수신함으로 발송합니다. 이전받는 자별 상세 정보는 아래와 같습니다.</p>
+      <div data-transfer-details><p>이전 국가·수탁자 연락처·보유기간 등 운영 정보를 확인 중입니다. 확인 전에는 문의를 전송하지 않습니다.</p></div>
+      <h3>거부 방법 및 영향</h3><p>국외 이전 동의란을 선택하지 않으면 이전을 거부할 수 있습니다. 거부 시 이 온라인 양식을 통한 문의 전송은 이용할 수 없습니다. 동의 후 철회는 개인정보 문의 이메일로 요청할 수 있습니다.</p>
+    </div>
+  </dialog>
+
+  <!-- 하단 상세 처리방침 -->
+  <dialog class="dialog dialog-text" id="privacyPolicyDialog" aria-labelledby="privacyPolicyTitle">
+    <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
+    <div class="dialog-content">
+      <h2 id="privacyPolicyTitle">개인정보 처리방침</h2>
+      <p id="policyDraftNotice" class="policy-note">운영 정보 확정 전 검토용 초안입니다. 자동 접수는 아직 활성화되지 않았습니다.</p>
+      <p>쌤픽에듀는 「개인정보 보호법」에 따라 개인정보를 보호하고, 관련 문의와 고충을 처리하기 위해 다음과 같이 개인정보 처리방침을 공개합니다. 이 방침은 웹사이트의 연수·교육사업 문의 양식에 적용됩니다.</p>
+      <h3>1. 처리 목적 및 법적 근거</h3>
+      <p>문의 접수, 문의 담당자 확인, 연수·교육사업 상담과 회신을 위해 개인정보를 처리합니다. 필수 정보와 선택 정보는 각각 정보주체의 동의(개인정보 보호법 제15조 제1항 제1호)에 따라 수집·이용합니다. 쌤픽에듀는 광고 발송이나 AI 학습에 이용하지 않습니다. 스팸·중복 발송 방지용 임시 정보는 서비스 보호를 위한 정당한 이익(개인정보 보호법 제15조 제1항 제6호)을 근거로 최소한의 범위에서 처리합니다. 목적 변경 시 필요한 조치를 하고 별도의 동의를 받습니다.</p>
+      <h3>2. 수집 항목 및 방법</h3>
+      <p>필수: 기관명, 담당자명, 이메일, 문의 유형.<br>선택: 연락처, 연수 대상, 희망 주제, 예상 인원, 희망 일정, 상세 내용.</p>
+      <p>웹사이트 문의 양식에서 직접 입력하고 동의한 정보를 수집합니다. 선택 정보 수집·이용에 동의하지 않은 경우 선택 항목은 전송하지 않습니다. 동의 여부, 동의를 포함한 서버 접수 시각, 동의 문서 버전 및 접수 식별자를 문의 메일에 함께 기록합니다. 스팸·중복 발송 방지를 위해 이메일에서 생성한 서명값(원문 이메일 대신 사용), 무작위 접수 식별자, 제출 내용의 서명값과 처리 상태를 일시적으로 처리합니다. Google 서비스가 별도로 처리하는 접속정보의 항목과 보유기간은 실제 이용 조건을 확인해 아래 위탁·국외 이전 안내에 공개합니다.</p>
+      <p>이 양식은 기관의 성인 담당자를 위한 것으로, 학생·만 14세 미만 아동의 정보, 민감정보, 고유식별정보는 수집하지 않습니다. 불필요하게 입력된 정보는 확인 후 삭제합니다.</p>
+      <h3>3. 보유·이용 기간</h3>
+      <p><strong>문의 정보 및 동의 기록은 상담 종료일부터 3개월 또는 문의 접수일부터 1년 중 먼저 도래하는 날까지</strong> 보유한 뒤 삭제합니다. 이는 문의 회신과 후속 상담을 위한 운영상 보유기간이며 법정 의무 보존기간이 아닙니다. 동의 철회·삭제 요청이 있으면 법령상 보존 의무가 없는 정보는 지체 없이 삭제합니다. 스팸 방지용 이메일 서명값은 최대 60초, 중복 방지용 접수 식별자·제출 내용 서명값·처리 상태는 최대 10분 동안 임시 캐시에 보관합니다. 캐시는 그보다 일찍 삭제될 수 있습니다. 일일 발송 횟수는 개인정보가 없는 집계 값으로 관리합니다. 실제 계약으로 이어지는 경우 계약 관련 개인정보의 처리 근거와 보존 기준은 계약 단계에서 별도로 안내합니다.</p>
+      <h3>4. 처리위탁 및 국외 이전</h3>
+      <p>문의 처리·이메일 발송에는 Google Apps Script의 MailApp을, 수신 메일 보관·조회에는 Google Gmail을 사용합니다. 별도의 자체 문의 DB나 구글 시트에 저장하지 않습니다. 문의 본문과 동의 기록은 지정된 Gmail 수신함에 보관되며, 스팸·중복 방지용 임시 정보는 Apps Script 캐시에 저장됩니다. 이메일 발송은 배포 계정의 권한으로 실행됩니다.</p>
+      <p>처리위탁 계약에서는 목적 외 처리 금지, 안전조치, 재위탁 관리, 감독 및 책임 사항을 정하고 이행 여부를 확인합니다. 국외 이전은 별도 동의(개인정보 보호법 제28조의8 제1항 제1호)에 따라 진행합니다.</p>
+      <div data-transfer-details><p>수탁자별 이전 국가, 연락처, 처리 항목, 이전 시기·방법, 목적, 보유기간은 확인 중입니다. 모든 정보를 확정하고 공개한 뒤 자동 접수를 시작합니다.</p></div>
+      <h3>5. 제3자 제공</h3>
+      <p>문의 정보를 독립적인 영업·광고 목적으로 제3자에게 제공하지 않습니다. 법률상 근거가 있거나 별도 동의를 받은 경우에만 제공하며, 위탁에 따른 처리는 제4항에 안내합니다.</p>
+      <h3>6. 파기 절차 및 방법</h3>
+      <p>기간이 끝나거나 처리 목적이 달성되면 담당자가 대상 정보를 확인하고 Gmail 수신함·보관함·휴지통, 발송 계정에 남는 메일 사본 및 내려받은 업무 사본에서 삭제합니다. 보유기간 만료 시 휴지통으로 이동하는 데 그치지 않고 영구 삭제합니다. 스팸·중복 방지용 임시 정보는 지정한 캐시 만료시간에 따라 삭제됩니다. 전자파일은 복구가 어렵도록 삭제하고 출력물은 분쇄합니다. 서비스 제공자의 백업·접속 기록 삭제 범위와 주기는 제4항의 확정된 조건을 따릅니다. 법령에 따른 별도 보존이 필요한 경우 해당 근거·항목·기간을 안내하고 다른 정보와 분리해 보관합니다.</p>
+      <h3>7. 정보주체의 권리 및 행사 방법</h3>
+      <p>본인 또는 적법한 대리인은 열람, 정정·삭제, 처리정지, 동의 철회를 아래 문의처에 이메일로 요청할 수 있습니다. 필요한 최소 정보로 본인·대리인 여부를 확인하고 법령에 정해진 기간 내 조치 결과를 안내합니다. 법령상 제한이 있으면 그 사유와 이의 제기 방법을 알립니다. 선택 정보에 대한 동의 거부나 철회만으로 문의 상담을 제한하지 않습니다.</p>
+      <h3>8. 안전성 확보 조치</h3>
+      <p>운영 시 담당자에 한해 접근권한을 부여하고, 계정의 2단계 인증과 안전한 비밀번호, HTTPS 전송을 적용합니다. 문의 사본의 보관 위치와 삭제 주기를 관리하고, 담당자 교육과 권한 점검을 실시합니다. 이 조치는 접수 활성화 전에 운영 계정과 배포 환경에 적용합니다.</p>
+      <h3>9. 자동 수집 및 외부 서비스</h3>
+      <p>문의 입력 내용을 브라우저의 로컬 저장소에 영구 저장하지 않으며, 발송용 Apps Script 코드에 문의 본문을 실행 로그로 남기는 명령을 두지 않습니다. 또한 별도의 광고·분석 쿠키를 사용하지 않습니다. 현재 글꼴을 제공하는 외부 CDN(jsDelivr)에 접속할 때 IP 주소와 브라우저 접속 정보가 전달될 수 있습니다. 호스팅 서비스의 접속 로그, 글꼴 CDN 및 Google 서비스의 운영·보안 기능이 처리하는 정보와 법적 근거는 실제 배포 설정을 확인해 안내합니다. CAPTCHA 등 추가 외부 서비스를 사용하는 경우 제공자·수집 항목·국외 이전 정보를 먼저 반영합니다.</p>
+      <h3>10. 개인정보 보호책임자 및 문의처</h3>
+      <p>개인정보처리자: 쌤픽에듀<br>개인정보 보호책임자: <span id="privacyOfficer">성명·직책 확정 후 공개 예정</span><br>권리 행사 및 개인정보 문의: <a href="mailto:ij7404613@gmail.com">ij7404613@gmail.com</a></p>
+      <h3>11. 피해 구제</h3>
+      <p>개인정보침해 신고·상담: <a href="https://privacy.kisa.or.kr/" target="_blank" rel="noopener noreferrer">개인정보침해신고센터</a> (118)<br>분쟁 조정: <a href="https://www.kopico.go.kr/" target="_blank" rel="noopener noreferrer">개인정보분쟁조정위원회</a> (1833-6972)</p>
+      <h3>12. 시행 및 변경</h3>
+      <p id="privacyDate">시행일: 운영 정보 확정 후 공개 예정</p>
+      <p>변경 시 시행일과 변경 내용을 이 페이지에 공개하고 이전 방침을 확인할 수 있도록 보관합니다. 동의가 필요한 처리 변경은 시행 전에 별도 동의를 받습니다.</p>
+      <p class="policy-note">작성 기준: 개인정보보호위원회 개인정보 처리방침 작성지침(2026.4. 개정). 초안 작성일: 2026년 10월 2일.</p>
     </div>
   </dialog>
 
   <script src="asset/js/config.js"></script>
+  <script src="asset/js/inquiry-transport.js" defer></script>
   <script src="asset/js/main.js" defer></script>
 </body>
 </html>
