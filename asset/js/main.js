@@ -347,9 +347,9 @@
   var formSuccess = $('#formSuccess');
   var formStatus = $('#formStatus');
   var phone = $('#phone');
-  var optionalConsent = $('#optionalConsent');
-  // 선택 동의 UI가 없는 경우 선택 정보는 전송하지 않습니다.
-  function hasOptionalConsent() { return !!(optionalConsent && optionalConsent.checked); }
+  var collectionConsent = $('#consent');
+  // 공통 수집·이용 동의는 필수 정보와 사용자가 입력한 선택 정보에 적용합니다.
+  function hasOptionalConsent() { return !!(collectionConsent && collectionConsent.checked); }
 
   var LABELS = { org: '기관명', name: '담당자명', phone: '연락처', email: '이메일', type: '문의 유형', target: '연수 대상', topic: '희망 주제', headcount: '예상 인원', schedule: '희망 일정', message: '상세 내용' };
   var PHONE_RE = /^(0\d{1,2})-?(\d{3,4})-?(\d{4})$/;
@@ -440,7 +440,7 @@
   var submissionId = '';
   var submissionFingerprint = '';
   var submitBtn = $('#submitBtn');
-  if (optionalConsent) optionalConsent.addEventListener('change', function () { validateField(phone); });
+  if (collectionConsent) collectionConsent.addEventListener('change', function () { validateField(phone); });
   var copyBtn = $('#copyBtn');
   var copyStatus = $('#copyStatus');
 
@@ -503,13 +503,6 @@
       formSuccess.hidden = false;
       $('#successTitle').focus();
     } catch (err) {
-      // 입력값·메일 본문을 콘솔에 기록하지 않고 진단 정보만 남깁니다.
-      console.error('[문의 접수]', {
-        code: err.code || (err instanceof TypeError ? 'CLIENT_ERROR' : 'UNAVAILABLE'),
-        stage: mailAccepted ? 'success-display' : (err.stage || 'submission'),
-        errorType: err.name,
-        siteOrigin: location.origin
-      });
       formStatus.textContent = mailAccepted ? '문의 메일 발송 요청은 완료되었으나 완료 화면을 표시하지 못했습니다. 다시 제출하지 마세요.' :
         err.code === 'BRIDGE_TIMEOUT' || err.code === 'BRIDGE_LOAD_FAILED' ?
         '문의 전송 연결을 시작하지 못했습니다. 사이트 주소 설정 또는 Apps Script 배포 상태를 확인해야 합니다. 입력 내용은 유지됩니다.' :
