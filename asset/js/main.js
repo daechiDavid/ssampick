@@ -482,7 +482,7 @@
     submitBtn.disabled = true;
     submitBtn.textContent = '접수 중…';
     form.setAttribute('aria-busy', 'true');
-    formStatus.textContent = '문의 내용을 전송하고 있습니다.';
+    formStatus.textContent = '';
     try {
       var result = await window.sendInquiryViaAppsScript(CFG.inquiryEndpoint, payload);
       if (result.ok !== true) {
@@ -505,7 +505,7 @@
         '접수를 완료하지 못했습니다. 입력 내용을 유지했습니다. 잠시 후 다시 시도하거나 ij7404613@gmail.com으로 문의해 주세요.';
     } finally {
       submitting = false;
-      submitBtn.disabled = false;
+      submitBtn.disabled = !receptionReady;
       submitBtn.textContent = '문의하기';
       form.removeAttribute('aria-busy');
     }
@@ -545,7 +545,8 @@
     copyStatus.textContent = '접수된 문의 내용의 사본을 기기에 저장했습니다.';
   });
   submitBtn.disabled = !receptionReady;
-  $('#formNote').textContent = receptionReady ? '문의 내용은 담당자 이메일로 자동 전달됩니다. 별도의 메일 앱을 열지 않습니다.' : '자동 접수 연결을 준비 중입니다. 현재는 문의가 전송되지 않습니다. 문의: ' + CFG.inquiryEmail;
+  var formNote = $('#formNote');
+  if (formNote) formNote.textContent = receptionReady ? '문의 내용은 담당자 이메일로 자동 전달됩니다. 별도의 메일 앱을 열지 않습니다.' : '자동 접수 연결을 준비 중입니다. 현재는 문의가 전송되지 않습니다. 문의: ' + CFG.inquiryEmail;
 
   $('#editBtn').addEventListener('click', function () {
     form.reset();

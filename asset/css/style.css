@@ -84,6 +84,7 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .btn-block { width: 100%; }
 .btn-primary { background: var(--navy); color: #fff; }
 .btn-primary:hover { background: var(--navy-deep); }
+#submitBtn:disabled { opacity: .55; cursor: not-allowed; transform: none; background: var(--navy); }
 .btn-accent { background: var(--green); color: #fff; }
 .btn-accent:hover { background: var(--green-deep); }
 .btn-ghost { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.55); backdrop-filter: blur(4px); }
