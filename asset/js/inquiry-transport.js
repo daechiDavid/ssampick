@@ -12,6 +12,7 @@
       var frame = document.createElement('iframe');
       var remote = null;
       var timer;
+      var stage = 'bridge-loading';
       frame.hidden = true;
       frame.title = '문의 전송 연결';
       frame.referrerPolicy = 'no-referrer';
@@ -26,6 +27,7 @@
             !/^https:\/\/(?:script\.google\.com|[a-z0-9-]+\.googleusercontent\.com)$/.test(event.origin)) return;
         // HtmlService는 중첩 iframe을 사용하므로 nonce로 첫 응답을 확인한 뒤 source를 고정합니다.
         if (message.kind === 'ready' && !remote && event.source) {
+          stage = 'server-response';
           remote = event.source;
           remote.postMessage({ channel: channel, kind: 'submit', payload: payload }, event.origin);
         } else if (message.kind === 'result' && event.source === remote) {
@@ -38,9 +40,18 @@
         cleanup();
         var err = new Error('전송 결과 확인 시간 초과');
         err.name = 'TimeoutError';
+        err.code = remote ? 'RESPONSE_TIMEOUT' : 'BRIDGE_TIMEOUT';
+        err.stage = stage;
         reject(err);
       }, 45000);
       frame.src = endpoint + '?channel=' + encodeURIComponent(channel);
+      frame.addEventListener('error', function () {
+        cleanup();
+        var err = new Error('문의 전송 연결 실패');
+        err.code = 'BRIDGE_LOAD_FAILED';
+        err.stage = stage;
+        reject(err);
+      });
       document.body.appendChild(frame);
     });
   };

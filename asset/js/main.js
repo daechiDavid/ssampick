@@ -483,13 +483,16 @@
     submitBtn.textContent = '접수 중…';
     form.setAttribute('aria-busy', 'true');
     formStatus.textContent = '';
+    var mailAccepted = false;
     try {
       var result = await window.sendInquiryViaAppsScript(CFG.inquiryEndpoint, payload);
       if (result.ok !== true) {
         var failed = new Error(result.code || 'UNAVAILABLE');
+        failed.code = result.code || 'UNAVAILABLE';
         if (result.code === 'UNKNOWN') failed.name = 'TimeoutError';
         throw failed;
       }
+      mailAccepted = true;
       lastText = buildText(d);
       $('#summary').innerHTML = Object.keys(LABELS).filter(function (id) { return d[id]; }).map(function (id) {
         return '<div><dt>' + esc(LABELS[id]) + '</dt><dd>' + esc(d[id]) + '</dd></div>';
@@ -500,7 +503,17 @@
       formSuccess.hidden = false;
       $('#successTitle').focus();
     } catch (err) {
-      formStatus.textContent = err.name === 'TimeoutError' || err instanceof TypeError ?
+      // 입력값·메일 본문을 콘솔에 기록하지 않고 진단 정보만 남깁니다.
+      console.error('[문의 접수]', {
+        code: err.code || (err instanceof TypeError ? 'CLIENT_ERROR' : 'UNAVAILABLE'),
+        stage: mailAccepted ? 'success-display' : (err.stage || 'submission'),
+        errorType: err.name,
+        siteOrigin: location.origin
+      });
+      formStatus.textContent = mailAccepted ? '문의 메일 발송 요청은 완료되었으나 완료 화면을 표시하지 못했습니다. 다시 제출하지 마세요.' :
+        err.code === 'BRIDGE_TIMEOUT' || err.code === 'BRIDGE_LOAD_FAILED' ?
+        '문의 전송 연결을 시작하지 못했습니다. 사이트 주소 설정 또는 Apps Script 배포 상태를 확인해야 합니다. 입력 내용은 유지됩니다.' :
+        err.name === 'TimeoutError' || err instanceof TypeError ?
         '접수 결과를 확인하지 못했습니다. 이미 전송됐을 수 있으므로 재접수 전 ij7404613@gmail.com으로 확인해 주세요. 입력 내용은 유지됩니다.' :
         '접수를 완료하지 못했습니다. 입력 내용을 유지했습니다. 잠시 후 다시 시도하거나 ij7404613@gmail.com으로 문의해 주세요.';
     } finally {
