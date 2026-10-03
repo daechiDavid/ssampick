@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><title>문의 전송</title></head>
+<body>
+<script>
+(function () {
+  'use strict';
+  var cfg = <?!= bridgeConfig ?>;
+  if (cfg.error) {
+    window.top.postMessage({ channel: cfg.channel, kind: 'ready', error: cfg.error }, cfg.origin);
+    return;
+  }
+  var used = false;
+  function report(result) {
+    window.top.postMessage({ channel: cfg.channel, kind: 'result', result: result }, cfg.origin);
+  }
+  window.addEventListener('message', function (event) {
+    if (event.origin !== cfg.origin || event.source !== window.top || !event.data ||
+        event.data.channel !== cfg.channel || event.data.kind !== 'submit' || used) return;
+    used = true;
+    google.script.run.withSuccessHandler(report).withFailureHandler(function () {
+      report({ ok: false, code: 'UNKNOWN' });
+    }).submitInquiry(event.data.payload, { channel: cfg.channel, issued: cfg.issued, signature: cfg.signature });
+  });
+  window.top.postMessage({ channel: cfg.channel, kind: 'ready' }, cfg.origin);
+})();
+</script>
+</body>
+</html>
