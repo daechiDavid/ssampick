@@ -1,10 +1,53 @@
 # 쌤픽에듀 final
 
-mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 사이트입니다. Fable의 파랑·초록 색상, 둥근 카드, 실제 박람회 사진과 확대 기능을 유지합니다. index.html을 정적 웹서버로 제공하면 되며 빌드 과정은 없습니다.
+mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 사이트입니다. Fable의 파랑·초록 색상, 둥근 카드, 실제 박람회 사진과 확대 기능을 유지합니다. 공통 템플릿과 데이터에서 정적 HTML을 생성하며, 공개 파일만 담은 `dist/`를 배포합니다.
+
+## 빌드와 수정 위치
+
+Python 3 표준 라이브러리만으로 정적 사이트를 생성합니다.
+
+```sh
+python3 scripts/build_site.py
+python3 -m http.server 8765 --bind 127.0.0.1 --directory dist
+```
+
+로컬 확인 주소는 http://127.0.0.1:8765 입니다. 생성된 루트 HTML과 `asset/js/config.js`를 직접 수정하면 다음 빌드에서 덮어씁니다.
+
+| 변경 대상 | 원본 |
+| --- | --- |
+| 페이지 내용 | `site/pages/*.html` |
+| 공통 메뉴·하단·개인정보 안내 | `site/partials/*.html` |
+| 공개 운영 설정·문의 수신 주소 | `site/data/config.json` |
+| 사업 안내 / 운영 사례 | `site/data/businesses.json` / `site/data/cases.json` |
+| 문의 유형 | `site/data/inquiry-types.json` |
+| 스타일·브라우저 동작 | `asset/css/style.css` / `asset/js/*.js` |
+
+`config.json`에는 비밀번호·서명 비밀키를 넣지 않습니다. 문의 유형과 수신 주소는 빌드 시 `apps-script/SiteSettings.gs`에도 반영됩니다.
+
+공개 도메인이 확정되면 `config.json`의 `siteUrl`에 경로 없는 HTTPS 출처를 입력하고 다음 명령을 실행합니다. CLI 값으로 일회성 지정도 가능합니다.
+
+```sh
+python3 scripts/build_site.py --release --site-url https://www.example.com
+```
+
+실제 운영 도메인으로 바꿔야 합니다. 도메인 없는 기본 빌드는 검색 수집을 차단하는 미리보기용입니다. 공개 빌드는 canonical, OG 절대 주소, 조직 구조화 데이터, sitemap을 생성합니다.
+
+**배포 대상은 `dist/`만입니다.** 프로젝트 폴더 전체를 업로드하지 마세요. 원본 사진, `client-imgset/`, `private-source/`, `.kilo/`, 검토 파일, Apps Script 소스, 문서는 배포물에 포함되지 않습니다. 호스팅에서 `404.html`을 오류 페이지로 연결하고, `_headers`를 지원하지 않으면 동일 헤더를 호스팅 설정에 반영하세요.
+
+검증:
+
+```sh
+python3 -m unittest discover -s tests -p 'test_*.py'
+node --test tests/*.test.cjs
+node --check asset/js/main.js
+node --check asset/js/inquiry-transport.js
+```
+
+이미지 재생성은 Pillow가 필요한 `scripts/optimize_images.py`, 로컬 글꼴 갱신은 공식 배포본을 받는 `scripts/vendor_fonts.py`로 수행합니다. 일반 빌드에는 다운로드가 필요 없습니다.
 
 ## 보완 사항
 - 실적 다음에 프로그램·사례·강사진을 배치하고 회사 소개의 중복 서비스 목록을 정리했습니다.
-- 바이브 코딩과 원격 콘텐츠를 별도 카드로 추가해 6개 프로그램을 제공합니다.
+- 주요 사업을 5개로 정리하고, 사업별 상세 페이지를 제공합니다. 바이브 코딩은 학생교육 및 교원 연수 내용에 포함합니다.
 - 실제 실적 숫자를 HTML 기본값으로 제공하며 JavaScript가 없어도 콘텐츠와 FAQ가 보입니다.
 - 닫힌 모바일 메뉴의 키보드 접근을 차단하고 열린 메뉴의 포커스 순환·Escape 닫기를 지원합니다.
 - 모바일 상단 문의 버튼, 16px 입력 글씨, 기기 하단 안전 여백을 적용했습니다.
@@ -21,7 +64,7 @@ mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 �
 
 1. 수신 계정 또는 운영용 Google 계정으로 [Apps Script](https://script.google.com/)에서 새 프로젝트를 만듭니다.
 2. 이 폴더의 `apps-script/Code.gs` 내용을 편집기의 `Code.gs`에 붙여 넣습니다.
-3. HTML 파일을 추가해 이름을 **Bridge**로 지정하고 `apps-script/Bridge.html` 내용을 넣습니다.
+3. 스크립트 파일 **SiteSettings**를 추가하고 빌드된 `apps-script/SiteSettings.gs`를 넣습니다. 이어 HTML 파일을 추가해 이름을 **Bridge**로 지정하고 `apps-script/Bridge.html` 내용을 넣습니다.
 4. 프로젝트 설정에서 `appsscript.json` 표시를 켜고 제공된 `apps-script/appsscript.json` 내용으로 설정합니다.
 5. 프로젝트 설정 → 스크립트 속성에 아래 값을 추가합니다.
 
@@ -36,7 +79,7 @@ mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 �
 
 ### 2. 웹사이트 설정
 
-`asset/js/config.js`에서 다음 항목을 설정합니다.
+`site/data/config.json`에서 다음 항목을 설정한 뒤 `python3 scripts/build_site.py`를 실행합니다.
 
 - `inquiryEndpoint`: 위 `/exec` 배포 URL.
 - `privacyOfficerName`, `privacyOfficerRole`: 보호책임자 이름·직책.
@@ -45,9 +88,9 @@ mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 �
 - `transferRecipients`: Google Apps Script·Gmail의 법인명, 연락처, 이전 국가, 항목, 시기·방법, 목적, 문의 메일·운영 기록·백업의 보유기간. 국가 안내는 “미국 등 Google 데이터센터 소재 국가”로 작성하고, 개별 처리 국가를 공개 자료만으로 특정하지 못한다는 설명을 함께 표시합니다. 이 표현을 법령상 기재 요건이 확인된 표준 문구로 단정하지 않습니다.
 - `privacyReviewed`: 상세 처리방침의 미확정 부분과 운영 조건을 확정한 뒤 `true`.
 
-현재는 배포 URL과 운영 정보가 없어 접수 버튼이 비활성화되어 있습니다. 운영 정보가 입력되기 전에는 개인정보가 전송되지 않습니다. 로컬 파일 URL 대신 실제 HTTPS 사이트에서 운영해야 하며, 도메인이 바뀌면 서버 `ALLOWED_SITE_ORIGIN`도 변경해야 합니다.
+기존 배포 URL과 `privacyReviewed` 설정은 유지했습니다. 실제 접수 가능 여부는 설정과 배포된 서버의 상태에 따라 달라집니다. 준비 조건이 충족되지 않으면 접수를 막고 이메일 안내를 표시합니다. 로컬 파일 URL 대신 실제 HTTPS 사이트에서 운영해야 하며, 도메인이 바뀌면 서버 `ALLOWED_SITE_ORIGIN`도 변경해야 합니다.
 
-수신 주소는 `apps-script/Code.gs`의 `RECIPIENT`로 고정합니다. 웹사이트의 `inquiryEmail`은 화면 표시용으로, 제출자가 메일 수신자를 바꿀 수 없습니다. 코드 변경 후에는 배포 관리에서 새 버전을 선택해 다시 배포하세요.
+수신 주소는 `site/data/config.json`의 `inquiryEmail`에서 생성된 `apps-script/SiteSettings.gs`의 `RECIPIENT`로 서버에 고정합니다. 제출자가 전송 데이터로 수신자를 바꿀 수 없습니다. Code.gs, SiteSettings.gs, Bridge.html 변경 후에는 배포 관리에서 새 버전을 선택해 다시 배포하세요. 편집기 전용 `getReceptionStatus_` 함수로 당일 접수 수·실제 남은 메일 한도·출처·문서 버전을 점검할 수 있습니다.
 
 ### 전송 처리
 
@@ -55,10 +98,10 @@ mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 �
 - 메일 발송 함수가 성공한 경우에만 완료 화면을 표시합니다. 이는 메일 발송 요청의 완료이며 수신함 배달·읽음 보장은 아닙니다.
 - 서버에서도 필수 항목·문서 버전·필수 동의를 확인하고, 선택 동의가 없으면 선택 항목을 제외합니다.
 - 선택 정보 동의 여부, 국외 이전 동의, 문서 버전과 **서버 접수 시각**을 문의 메일에 기록합니다.
-- 일일 최대 50건, 같은 이메일은 60초 간격으로 제한합니다. 일반 Gmail Apps Script의 현재 수신자 한도는 하루 100명이며 다른 스크립트 발송량과 합산됩니다.
+- 일일 최대 50건, 같은 이메일은 60초 간격으로 제한합니다. 실제 Google 계정의 남은 MailApp 한도도 매번 확인합니다. 한도는 계정과 서비스 정책에 따라 달라질 수 있습니다.
 - 중복 방지 캐시는 최대 10분이며 Google이 일찍 제거할 수 있어 영구적인 중복 방지를 보장하지 않습니다. 결과가 불확실하면 자동 재전송하지 않습니다.
 - 공개 웹 앱은 로그인 없이 접근할 수 있습니다. 출처 확인·서명 티켓·일일 제한은 완전한 봇 차단 수단이 아닙니다. 스팸 때문에 한도가 소진되면 추가 방어가 필요합니다. CAPTCHA 추가 시 개인정보 안내도 함께 변경해야 합니다.
-- 이번 작업에서 실제 Google 계정 배포·실메일 발송·브라우저 동작 검증은 수행하지 않았습니다.
+- 로컬 브라우저에서 모바일·데스크톱 화면, 문의 유형 선택, 필수 입력 검증, 메뉴와 사례 펼침을 확인했습니다. 서버·전송 테스트는 모의 환경에서 실행했습니다. 실제 Google 계정 배포·실메일 발송·메일 수신 여부는 검증하지 않았습니다.
 
 ## 개인정보 운영 기준 (초안)
 
@@ -66,7 +109,7 @@ mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 �
 - 메일 삭제를 자동 수행하는 기능은 포함하지 않았습니다. 담당자는 상담 종료일과 접수일을 기준으로 삭제 예정일을 관리하고, 해당 날짜까지 수신·발송 계정의 메일 사본, 휴지통 및 다운로드 사본을 삭제해야 합니다. 휴지통으로 이동만 하면 최대 30일이 더 남으므로 영구 삭제해야 합니다.
 - 스팸 방지용 이메일 서명값은 최대 60초, 중복 방지용 접수 식별자·제출 내용 서명값·처리 상태는 최대 10분간 서버 캐시에 저장합니다. 원문 이메일·문의 본문을 캐시에 보관하지 않습니다.
 - 실행 로그에 문의 본문을 출력하지 않습니다. Google이 자체적으로 처리하는 운영 기록·백업의 기간은 실제 이용 조건과 구분해 안내해야 합니다.
-- 보호책임자·시행일·Google 국외 처리 조건, 호스팅 접속 로그와 jsDelivr 글꼴 CDN 조건은 운영 전 확정해야 합니다. 현재 처리방침은 검토용 초안입니다.
+- 보호책임자·시행일·Google 국외 처리 조건, 호스팅 접속 로그 조건은 운영 환경에 맞춰 확인해야 합니다. 글꼴은 로컬 제공으로 바꿨습니다. 기존 검토 완료 설정을 유지했지만 이번 코드 개선이 개인정보 문서의 법률 검토를 대신하지는 않습니다.
 - 개인정보 처리방침과 서버·웹사이트의 동의 버전은 함께 관리하고 이전 방침은 시행일별로 보관하세요.
 
 ## Google 이전 국가 안내와 적용 조건
@@ -90,3 +133,23 @@ mix_fable 전체를 복사한 후 이 폴더에서만 수정한 독립 정적 �
 - [HtmlService 서버 호출](https://developers.google.com/apps-script/guides/html/communication)
 - [MailApp](https://developers.google.com/apps-script/reference/mail/mail-app)
 - [Apps Script 사용 한도](https://developers.google.com/apps-script/guides/services/quotas)
+
+## 주요 사업 페이지 (2026-10-03)
+
+상단 주요 사업 메뉴는 데스크톱에서 마우스를 대거나 클릭하여 펼칠 수 있습니다. 키보드 Enter·Space·아래 방향키로 열고 Escape로 닫을 수 있으며, 모바일에서는 버튼을 눌러 사업 목록을 펼칩니다.
+
+- `학생교육 프로그램`: `business-students.html`
+- `교원 직무 연수`: `business-teacher-training.html`
+- `찾아가는 교사 연수`: `business-visiting-training.html`
+- `교육행사 운영`: `business-education-events.html`
+- `강의 전용 LMS 구축`: `business-lecture-lms.html`
+
+상세 페이지의 문의 버튼은 홈 문의 양식으로 이동하고 해당 문의 유형을 자동 선택합니다. 빌드된 `dist/`를 배포하세요. 서버 설정 변경은 Code.gs·SiteSettings.gs·Bridge.html을 반영한 새 Apps Script 배포가 필요합니다.
+
+## 콘텐츠 페이지 구성
+
+홈에서는 회사 소개, 주요 사업 메뉴, 핵심 실적과 문의를 중심으로 안내합니다. `programs.html`에는 운영 사례와 전문 강사진 정보를 모았습니다. 사업별 상세 내용은 해당 `business-*.html` 페이지에서 확인할 수 있습니다.
+
+## 검토 제안 추가 반영
+
+fix-astra·fix-grok·fix-fable를 종합한 상세 내역은 `IMPROVEMENTS.md`에서 확인할 수 있습니다. 사업별 구성 예시·진행 단계는 `site/data/businesses.json`의 `outline`에서 관리합니다. 예시는 기관별 협의 후 확정하며 고정 시수·가격·납기를 뜻하지 않습니다. 문의 폼은 사업 유형에 따라 항목 이름과 입력 예시를 변경하고, 선택 정보 작성 개수를 표시합니다.
