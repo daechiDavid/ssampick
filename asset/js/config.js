@@ -3,9 +3,9 @@ window.SSAMPICK_CONFIG = {
   "inquiryEmail": "ij7404613@gmail.com",
   "inquiryEndpoint": "https://script.google.com/macros/s/AKfycby_wceVjW4EN04VCZzn3vfkNHCzZmhwhERGzweu-mh-OjZdO4KW1GHu0QvOy6BS1tGlrA/exec",
   "phone": "",
-  "businessHours": "",
+  "businessHours": "평일 09:00–18:00 (공휴일 휴무)",
   "legalName": "쌤픽에듀",
-  "representative": "",
+  "representative": "이건호",
   "businessNumber": "",
   "address": "",
   "privacyOfficerName": "이건호",
@@ -26,5 +26,5 @@ window.SSAMPICK_CONFIG = {
     }
   ],
   "siteUrl": "",
-  "responseTime": ""
+  "responseTime": "접수 후 영업일 기준 2일 이내 이메일로 회신드립니다."
 };
