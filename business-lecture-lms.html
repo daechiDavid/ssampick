@@ -1,0 +1,204 @@
+<!-- Generated from site/pages/business-lecture-lms.html and site/partials/. Run python3 scripts/build_site.py after editing sources. -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#004080">
+  <title>강의 전용 LMS 구축 | 쌤픽에듀</title>
+  <meta name="description" content="기관의 강의 운영 목적에 맞는 학습관리시스템(LMS) 구성을 함께 설계하고, 콘텐츠와 학습자를 연결하는 운영 환경을 준비합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="강의 전용 LMS 구축 | 쌤픽에듀">
+  <meta property="og:description" content="기관의 강의 운영 목적에 맞는 학습관리시스템(LMS) 구성을 함께 설계하고, 콘텐츠와 학습자를 연결하는 운영 환경을 준비합니다.">
+  <meta property="og:image" content="asset/img/og-image.jpg">
+  <link rel="icon" type="image/svg+xml" href="asset/img/favicon.svg">
+  <link rel="stylesheet" href="asset/fonts/pretendard.css">
+  <link rel="stylesheet" href="asset/css/style.css">
+  <noscript><style>.menu-toggle{display:none}.gnb{position:static;visibility:visible;pointer-events:auto;transform:none;overflow:visible;padding:0}.site-header{position:static;height:auto}.header-inner,.gnb,.gnb ul{flex-wrap:wrap}.gnb .business-menu{display:flex;position:static;width:auto}.business-toggle{display:none}.hero,.business-hero{padding-top:40px}</style></noscript>
+</head>
+<body>
+  <!-- 인라인 SVG 스프라이트: file:// 환경에서도 동작하도록 외부 파일 대신 문서 내 정의 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></symbol>
+    <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5M11 8v6M8 11h6"/></symbol>
+    <symbol id="i-school" viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-6h4v6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.4 5.2 5.6.7-4.1 3.9 1.1 5.6L12 15.7 7 18.4l1.1-5.6L4 8.9l5.6-.7z"/></symbol>
+    <symbol id="i-plan" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16M9 10v9"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 11l10-4M7 13l10 4"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 48 48"><rect x="10" y="14" width="28" height="22" rx="4"/><circle cx="19" cy="25" r="3"/><circle cx="29" cy="25" r="3"/><path d="M24 6v8M16 36v5M32 36v5M4 22h6M38 22h6"/></symbol>
+    <symbol id="i-screen" viewBox="0 0 48 48"><rect x="6" y="10" width="36" height="24" rx="3"/><path d="M18 40h12M24 34v6M20 17l10 5-10 5z"/></symbol>
+    <symbol id="i-house" viewBox="0 0 48 48"><path d="M8 40V18l16-10 16 10v22M20 40V28h8v12M4 40h40"/></symbol>
+    <symbol id="i-people" viewBox="0 0 48 48"><circle cx="16" cy="18" r="6"/><circle cx="32" cy="18" r="6"/><path d="M4 40c0-7 5-12 12-12s12 5 12 12M22 40c0-7 5-12 12-12s10 5 10 12"/></symbol>
+  </svg>
+
+
+  <a class="skip-link" href="#main">본문 바로가기</a>
+
+  <!-- 공통 상단 메뉴: 주요 사업 드롭다운 -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="index.html#top" class="brand" aria-label="쌤픽에듀 홈">
+        <img src="asset/img/logo.webp" alt="쌤픽에듀 SsamPick EDU" width="1148" height="356">
+      </a>
+      <nav class="gnb" id="gnb" aria-label="주요 메뉴">
+        <ul>
+          <li><a href="index.html#about">회사 소개</a></li>
+          <li class="nav-business">
+            <button class="business-toggle active" type="button" aria-expanded="false" aria-controls="businessMenu">주요 사업 <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+            <ul class="business-menu" id="businessMenu" aria-label="주요 사업"><li><a href="index.html#businesses">전체 사업 한눈에 보기</a></li>
+              <li><a href="business-students.html">학생교육 프로그램</a></li>
+              <li><a href="business-teacher-training.html">교원 직무 연수</a></li>
+              <li><a href="business-visiting-training.html">찾아가는 교사 연수</a></li>
+              <li><a href="business-education-events.html">교육행사 운영</a></li>
+              <li><a href="business-lecture-lms.html" aria-current="page">강의 전용 LMS 구축</a></li>
+            </ul>
+          </li>
+          <li><a href="programs.html">운영 사례·강사진</a></li>
+          <li><a href="index.html#faq">자주 묻는 질문</a></li>
+        </ul>
+        <a href="index.html#contact" class="btn btn-primary gnb-cta">연수 문의</a>
+      </nav>
+      <a href="index.html#contact" class="btn btn-primary header-cta">연수 문의</a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="gnb">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="main">
+    <section class="business-hero has-image">
+      <img class="business-hero-image" src="asset/img/business-lecture-lms-1776.webp" srcset="asset/img/business-lecture-lms-768.webp 768w, asset/img/business-lecture-lms-1280.webp 1280w, asset/img/business-lecture-lms-1776.webp 1776w" sizes="(max-width: 960px) 100vw, 64vw" alt="온라인 강의와 연수 과정을 제공하는 학습관리시스템 화면" width="1776" height="949" fetchpriority="high">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="현재 위치"><a href="index.html">홈</a><span aria-hidden="true">/</span><a href="index.html#businesses">주요 사업</a><span aria-hidden="true">/</span><span aria-current="page">강의 전용 LMS 구축</span></nav>
+        <p class="eyebrow light">주요 사업 · 05</p>
+        <h1>강의 전용 LMS 구축</h1><p class="business-tagline">강의 콘텐츠와 학습자를 연결하는 공간</p>
+        <p class="section-lead">기관의 강의 운영 목적에 맞는 학습관리시스템(LMS) 구성을 함께 설계하고, 콘텐츠와 학습자를 연결하는 운영 환경을 준비합니다.</p>
+        <div class="hero-actions"><a class="btn btn-primary btn-lg" href="index.html?inquiry=%EA%B0%95%EC%9D%98%20%EC%A0%84%EC%9A%A9%20LMS%20%EA%B5%AC%EC%B6%95#contact">이 사업 문의하기</a><a class="btn btn-outline btn-lg" href="#businessDetails">사업 내용 보기</a></div>
+      </div>
+    </section>
+    <nav class="business-page-nav container" aria-label="사업별 페이지"><a href="business-students.html">학생교육 프로그램</a><a href="business-teacher-training.html">교원 직무 연수</a><a href="business-visiting-training.html">찾아가는 교사 연수</a><a href="business-education-events.html">교육행사 운영</a><a href="business-lecture-lms.html" aria-current="page">강의 전용 LMS 구축</a></nav>
+    <section class="section" id="businessDetails">
+      <div class="container">
+        <div class="section-head"><p class="eyebrow">사업 안내</p><h2 class="section-title">이렇게 함께합니다</h2></div>
+        <dl class="business-facts"><div><dt>대상</dt><dd>강의를 운영하는 교육기관 · 연수 운영 기관</dd></div><div><dt>운영 방식</dt><dd>요구사항 협의 · 플랫폼 구축 · 운영 지원</dd></div></dl>
+        <div class="business-features"><article class="business-feature"><span class="eyebrow">01</span><h3>강의 운영 구조 설계</h3><p>대상, 과정 구성, 운영 방식과 필요한 기능을 확인하고 기관에 맞는 강의 전용 공간을 설계합니다.</p></article><article class="business-feature"><span class="eyebrow">02</span><h3>강의 콘텐츠 구성</h3><p>과정별 강의 자료와 콘텐츠를 정리하고 학습자가 필요한 강의를 찾아 이용할 수 있도록 구성합니다.</p></article><article class="business-feature"><span class="eyebrow">03</span><h3>플랫폼 구축·운영 지원</h3><p>수강 안내와 학습 운영에 필요한 관리 흐름을 협의하고 플랫폼 구축과 운영 범위를 제안합니다.</p></article></div>
+      </div>
+    </section>
+    <section class="section business-outline" aria-labelledby="outlineTitle"><div class="container"><div class="section-head"><p class="eyebrow">구성 · 진행 안내</p><h2 class="section-title" id="outlineTitle">LMS 구축 협의부터 인수인계까지</h2></div><ol class="outline-grid"><li><span class="outline-number" aria-hidden="true">01</span><h3>요구사항 정리</h3><p>과정 등록·수강 신청·진도·이수 관리 중 필요한 기능과 이용 규모를 정합니다.</p></li><li><span class="outline-number" aria-hidden="true">02</span><h3>구축 범위 협의</h3><p>콘텐츠 등록, 기존 시스템 연계, 데이터 이전과 운영 권한의 범위를 정합니다.</p></li><li><span class="outline-number" aria-hidden="true">03</span><h3>시범 운영·검수</h3><p>학습자와 관리자 흐름을 확인할 시범 운영·검수 항목을 협의합니다.</p></li><li><span class="outline-number" aria-hidden="true">04</span><h3>운영·인수인계</h3><p>관리 방법과 기술 지원, 콘텐츠 수정, 호스팅·도메인 비용의 담당 범위를 정합니다.</p></li></ol><p class="outline-note">진행 단계의 예시입니다. 기능 지원 여부, 일정과 유지관리 조건은 요구사항 확인 후 확정합니다.</p></div></section>
+    <section class="section business-guide" aria-labelledby="guideTitle"><div class="container"><div class="section-head"><p class="eyebrow">상담 준비</p><h2 class="section-title" id="guideTitle">문의 전에 함께 확인할 내용</h2><p class="section-lead">정해진 항목만 알려주세요. 세부 구성·일정·비용은 기관의 목적과 조건을 확인한 뒤 제안드립니다.</p></div><dl class="planning-grid"><div><dt>필요 기능</dt><dd>과정 등록, 수강 신청, 진도·이수 관리 등 필요한 기능을 상담에서 확인합니다.</dd></div><div><dt>콘텐츠와 규모</dt><dd>영상·자료의 형식과 분량, 학습자 수, 동시 이용 규모를 알려주세요.</dd></div><div><dt>구축 범위와 일정</dt><dd>기존 시스템 연계, 데이터 이전, 시범 운영과 검수 범위를 협의합니다.</dd></div><div><dt>운영과 유지관리</dt><dd>콘텐츠 수정, 기술 지원, 호스팅·도메인 비용과 인수인계 범위를 사전에 정합니다.</dd></div></dl></div></section>
+    <section class="section business-experience"><div class="container narrow"><p class="eyebrow">관련 운영 경험</p><h2 class="section-title">갓쌤연수원 사이트 위탁 운영</h2><p class="section-lead">교원 연수 플랫폼인 갓쌤연수원 사이트 위탁 운영 경험을 바탕으로 강의 콘텐츠와 교원을 연결합니다. 구축 기능과 범위는 기관의 요구사항에 따라 협의합니다.</p><a class="link-arrow" href="programs.html#case-community">운영 사례 살펴보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></section>
+    <section class="section"><div class="container business-contact"><div><p class="eyebrow">맞춤 상담</p><h2 class="section-title">기관에 맞는 구성을 함께 준비합니다</h2><p class="section-lead">필요 기능·콘텐츠 분량·이용 규모·희망 일정을 알려주시면 구축 범위를 함께 검토합니다.</p></div><a class="btn btn-primary btn-lg" href="index.html?inquiry=%EA%B0%95%EC%9D%98%20%EC%A0%84%EC%9A%A9%20LMS%20%EA%B5%AC%EC%B6%95#contact">강의 전용 LMS 구축 문의</a></div></section>
+  </main>
+
+  <!-- ===== ⑦ 하단 정보: 레이아웃(claude) + 미확정 정보 비노출(gpt config) ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo"><img src="asset/img/logo.webp" alt="쌤픽에듀" width="1148" height="356"></div>
+          <p>AI·에듀테크 기반 교육 전문기업<br>SSAMPICK EDU</p>
+          <p class="footer-tag">AI · 에듀테크 · 교원연수 · 교육행사 · 전문강사 네트워크</p>
+        </div>
+        <div class="footer-cols">
+          <nav aria-label="하단 메뉴">
+            <h4>바로가기</h4>
+            <ul>
+              <li><a href="index.html#about">회사 소개</a></li>
+              <li><a href="programs.html">운영 사례·강사진</a></li>
+              <li><a href="index.html#contact">연수·사업 문의</a></li>
+            </ul>
+          </nav>
+          <div>
+            <h4>사업 분야</h4>
+            <ul>
+              <li><a href="business-students.html">학생교육 프로그램</a></li>
+              <li><a href="business-teacher-training.html">교원 직무 연수</a></li>
+              <li><a href="business-visiting-training.html">찾아가는 교사 연수</a></li>
+              <li><a href="business-education-events.html">교육행사 운영</a></li>
+              <li><a href="business-lecture-lms.html" aria-current="page">강의 전용 LMS 구축</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>연락처</h4>
+            <ul id="footerContact"><li><a data-inquiry-email href="mailto:ij7404613@gmail.com">ij7404613@gmail.com</a></li>
+              <li><a href="index.html#contact">연수 문의 양식</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="biz" id="companyDetails">상호: 쌤픽에듀</p>
+        <p class="legal">
+          <button type="button" class="text-btn" data-open="privacyPolicyDialog">개인정보 처리방침</button>
+          <span>© <span id="year">2026</span> SSAMPICK EDU. All rights reserved.</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <a href="index.html?inquiry=%EA%B0%95%EC%9D%98%20%EC%A0%84%EC%9A%A9%20LMS%20%EA%B5%AC%EC%B6%95#contact" class="floating-cta">이 사업 문의</a>
+  <button class="to-top" id="toTop" type="button" aria-label="맨 위로"><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button>
+
+  <!-- 사진 라이트박스 -->
+
+
+  <!-- 사례 상세 -->
+
+
+  <!-- 수집·이용 동의: 핵심 정보 -->
+
+
+
+
+  <!-- 하단 상세 처리방침 -->
+  <dialog class="dialog dialog-text" id="privacyPolicyDialog" aria-labelledby="privacyPolicyTitle">
+    <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
+    <div class="dialog-content">
+      <h2 id="privacyPolicyTitle">개인정보 처리방침</h2>
+      <p id="policyDraftNotice" class="policy-note">운영 정보 확정 전 검토용 초안입니다. 자동 접수는 아직 활성화되지 않았습니다.</p>
+      <p>쌤픽에듀는 「개인정보 보호법」에 따라 개인정보를 보호하고, 관련 문의와 고충을 처리하기 위해 다음과 같이 개인정보 처리방침을 공개합니다. 이 방침은 웹사이트의 연수·교육사업 문의 양식에 적용됩니다.</p>
+      <h3>1. 처리 목적 및 법적 근거</h3>
+      <p>문의 접수, 문의 담당자 확인, 연수·교육사업 상담과 회신을 위해 개인정보를 처리합니다. 필수 정보와 직접 입력한 선택 정보는 개인정보 수집·이용 동의(개인정보 보호법 제15조 제1항 제1호)에 따라 처리합니다. 선택 항목은 입력하지 않아도 문의할 수 있습니다. 쌤픽에듀는 광고 발송이나 AI 학습에 이용하지 않습니다. 스팸·중복 발송 방지용 임시 정보는 서비스 보호를 위한 정당한 이익(개인정보 보호법 제15조 제1항 제6호)을 근거로 최소한의 범위에서 처리합니다. 목적 변경 시 필요한 조치를 하고 별도의 동의를 받습니다.</p>
+      <h3>2. 수집 항목 및 방법</h3>
+      <p>필수: 기관명, 담당자명, 이메일, 문의 유형.<br>선택: 연락처, 연수 대상, 희망 주제, 예상 인원, 희망 일정, 상세 내용.</p>
+      <p>웹사이트 문의 양식에서 직접 입력하고 동의한 정보를 수집합니다. 수집·이용 동의는 필수 정보와 직접 입력한 선택 정보에 적용되며, 입력하지 않은 선택 정보는 수집하지 않습니다. 동의 여부, 동의를 포함한 서버 접수 시각, 동의 문서 버전 및 접수 식별자를 문의 메일에 함께 기록합니다. 스팸·중복 발송 방지를 위해 이메일에서 생성한 서명값(원문 이메일 대신 사용), 무작위 접수 식별자, 제출 내용의 서명값과 처리 상태를 일시적으로 처리합니다. Google 서비스가 별도로 처리하는 접속정보의 항목과 보유기간은 실제 이용 조건을 확인해 아래 위탁·국외 이전 안내에 공개합니다.</p>
+      <p>이 양식은 기관의 성인 담당자를 위한 것으로, 학생·만 14세 미만 아동의 정보, 민감정보, 고유식별정보는 수집하지 않습니다. 불필요하게 입력된 정보는 확인 후 삭제합니다.</p>
+      <h3>3. 보유·이용 기간</h3>
+      <p><strong>문의 정보 및 동의 기록은 상담 종료일부터 3개월 또는 문의 접수일부터 1년 중 먼저 도래하는 날까지</strong> 보유한 뒤 삭제합니다. 이는 문의 회신과 후속 상담을 위한 운영상 보유기간이며 법정 의무 보존기간이 아닙니다. 동의 철회·삭제 요청이 있으면 법령상 보존 의무가 없는 정보는 지체 없이 삭제합니다. 스팸 방지용 이메일 서명값은 최대 60초, 중복 방지용 접수 식별자·제출 내용 서명값·처리 상태는 최대 10분 동안 임시 캐시에 보관합니다. 캐시는 그보다 일찍 삭제될 수 있습니다. 일일 발송 횟수는 개인정보가 없는 집계 값으로 관리합니다. 실제 계약으로 이어지는 경우 계약 관련 개인정보의 처리 근거와 보존 기준은 계약 단계에서 별도로 안내합니다.</p>
+      <h3>4. 처리위탁 및 국외 이전</h3>
+      <p>문의 처리·이메일 발송에는 Google Apps Script의 MailApp을, 수신 메일 보관·조회에는 Google Gmail을 사용합니다. 별도의 자체 문의 DB나 구글 시트에 저장하지 않습니다. 문의 본문과 동의 기록은 지정된 Gmail 수신함에 보관되며, 스팸·중복 방지용 임시 정보는 Apps Script 캐시에 저장됩니다. 이메일 발송은 배포 계정의 권한으로 실행됩니다.</p>
+      <p>처리위탁 계약에서는 목적 외 처리 금지, 안전조치, 재위탁 관리, 감독 및 책임 사항을 정하고 이행 여부를 확인합니다. 국외 이전은 별도 동의(개인정보 보호법 제28조의8 제1항 제1호)에 따라 진행합니다.</p>
+      <div data-transfer-details><p>수탁자별 이전 국가, 연락처, 처리 항목, 이전 시기·방법, 목적, 보유기간은 확인 중입니다. 모든 정보를 확정하고 공개한 뒤 자동 접수를 시작합니다.</p></div>
+      <h3>5. 제3자 제공</h3>
+      <p>문의 정보를 독립적인 영업·광고 목적으로 제3자에게 제공하지 않습니다. 법률상 근거가 있거나 별도 동의를 받은 경우에만 제공하며, 위탁에 따른 처리는 제4항에 안내합니다.</p>
+      <h3>6. 파기 절차 및 방법</h3>
+      <p>기간이 끝나거나 처리 목적이 달성되면 담당자가 대상 정보를 확인하고 Gmail 수신함·보관함·휴지통, 발송 계정에 남는 메일 사본 및 내려받은 업무 사본에서 삭제합니다. 보유기간 만료 시 휴지통으로 이동하는 데 그치지 않고 영구 삭제합니다. 스팸·중복 방지용 임시 정보는 지정한 캐시 만료시간에 따라 삭제됩니다. 전자파일은 복구가 어렵도록 삭제하고 출력물은 분쇄합니다. 서비스 제공자의 백업·접속 기록 삭제 범위와 주기는 제4항의 확정된 조건을 따릅니다. 법령에 따른 별도 보존이 필요한 경우 해당 근거·항목·기간을 안내하고 다른 정보와 분리해 보관합니다.</p>
+      <h3>7. 정보주체의 권리 및 행사 방법</h3>
+      <p>본인 또는 적법한 대리인은 열람, 정정·삭제, 처리정지, 동의 철회를 아래 문의처에 이메일로 요청할 수 있습니다. 필요한 최소 정보로 본인·대리인 여부를 확인하고 법령에 정해진 기간 내 조치 결과를 안내합니다. 법령상 제한이 있으면 그 사유와 이의 제기 방법을 알립니다. 선택 정보에 대한 동의 거부나 철회만으로 문의 상담을 제한하지 않습니다.</p>
+      <h3>8. 안전성 확보 조치</h3>
+      <p>운영 시 담당자에 한해 접근권한을 부여하고, 계정의 2단계 인증과 안전한 비밀번호, HTTPS 전송을 적용합니다. 문의 사본의 보관 위치와 삭제 주기를 관리하고, 담당자 교육과 권한 점검을 실시합니다. 이 조치는 접수 활성화 전에 운영 계정과 배포 환경에 적용합니다.</p>
+      <h3>9. 자동 수집 및 외부 서비스</h3>
+      <p>문의 입력 내용을 브라우저의 로컬 저장소에 영구 저장하지 않으며, 발송용 Apps Script 코드에 문의 본문을 실행 로그로 남기는 명령을 두지 않습니다. 또한 별도의 광고·분석 쿠키를 사용하지 않습니다. 글꼴은 이 웹사이트에서 직접 제공하며 외부 글꼴 CDN에 접속하지 않습니다. 호스팅 서비스의 접속 로그 및 Google 서비스의 운영·보안 기능이 처리하는 정보와 법적 근거는 실제 배포 설정을 확인해 안내합니다. CAPTCHA 등 추가 외부 서비스를 사용하는 경우 제공자·수집 항목·국외 이전 정보를 먼저 반영합니다.</p>
+      <h3>10. 개인정보 보호책임자 및 문의처</h3>
+      <p>개인정보처리자: 쌤픽에듀<br>개인정보 보호책임자: <span id="privacyOfficer">성명·직책 확정 후 공개 예정</span><br>권리 행사 및 개인정보 문의: <a data-inquiry-email href="mailto:ij7404613@gmail.com">ij7404613@gmail.com</a></p>
+      <h3>11. 피해 구제</h3>
+      <p>개인정보침해 신고·상담: <a href="https://privacy.kisa.or.kr/" target="_blank" rel="noopener noreferrer">개인정보침해신고센터</a> (118)<br>분쟁 조정: <a href="https://www.kopico.go.kr/" target="_blank" rel="noopener noreferrer">개인정보분쟁조정위원회</a> (1833-6972)</p>
+      <h3>12. 시행 및 변경</h3>
+      <p id="privacyDate">시행일: 운영 정보 확정 후 공개 예정</p>
+      <p>변경 시 시행일과 변경 내용을 이 페이지에 공개하고 이전 방침을 확인할 수 있도록 보관합니다. 동의가 필요한 처리 변경은 시행 전에 별도 동의를 받습니다.</p>
+      <p class="policy-note">작성 기준: 개인정보보호위원회 개인정보 처리방침 작성지침(2026.4. 개정). 최초 작성일: 2026년 10월 2일.</p>
+    </div>
+  </dialog>
+
+
+  <script src="asset/js/config.js"></script>
+  <script src="asset/js/main.js" defer></script>
+</body>
+</html>

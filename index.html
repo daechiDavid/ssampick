@@ -1,23 +1,22 @@
+<!-- Generated from site/pages/index.html and site/partials/. Run python3 scripts/build_site.py after editing sources. -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#004080">
-  <title>쌤픽에듀 | AI·에듀테크 기반 교원 연수 전문 교육기업</title>
-  <meta name="description" content="교육의 변화를 이해하고, 현장에 적용되는 연수를 만듭니다. 연수 기획, 콘텐츠 제작, 강사 매칭, 현장 운영까지 함께합니다.">
+  <title>쌤픽에듀 | 학생교육·교원 연수·교육행사·LMS</title>
+  <meta name="description" content="학생교육, 교원 직무 연수, 찾아가는 교사 연수, 교육행사와 LMS 구축. 기관에 필요한 교육의 기획부터 현장·온라인 운영까지 함께합니다.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:title" content="쌤픽에듀 | AI·에듀테크 기반 교원 연수 전문 교육기업">
-  <meta property="og:description" content="교육의 변화를 이해하고, 현장에 적용되는 연수를 만듭니다. 연수 기획, 콘텐츠 제작, 강사 매칭, 현장 운영까지 함께합니다.">
-  <!-- 공개 도메인 확정 후 절대 URL로 교체 -->
+  <meta property="og:title" content="쌤픽에듀 | 학생교육·교원 연수·교육행사·LMS">
+  <meta property="og:description" content="학생교육, 교원 직무 연수, 찾아가는 교사 연수, 교육행사와 LMS 구축. 기관에 필요한 교육의 기획부터 현장·온라인 운영까지 함께합니다.">
   <meta property="og:image" content="asset/img/og-image.jpg">
   <link rel="icon" type="image/svg+xml" href="asset/img/favicon.svg">
   <link rel="preload" as="image" href="asset/img/expo-stage-1920.webp" imagesrcset="asset/img/expo-stage-768.webp 768w, asset/img/expo-stage-1280.webp 1280w, asset/img/expo-stage-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="asset/fonts/pretendard.css">
   <link rel="stylesheet" href="asset/css/style.css">
-  <noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
+  <noscript><style>.menu-toggle{display:none}.gnb{position:static;visibility:visible;pointer-events:auto;transform:none;overflow:visible;padding:0}.site-header{position:static;height:auto}.header-inner,.gnb,.gnb ul{flex-wrap:wrap}.gnb .business-menu{display:flex;position:static;width:auto}.business-toggle{display:none}.hero,.business-hero{padding-top:40px}</style></noscript>
 </head>
 <body>
   <!-- 인라인 SVG 스프라이트: file:// 환경에서도 동작하도록 외부 파일 대신 문서 내 정의 -->
@@ -38,9 +37,10 @@
     <symbol id="i-people" viewBox="0 0 48 48"><circle cx="16" cy="18" r="6"/><circle cx="32" cy="18" r="6"/><path d="M4 40c0-7 5-12 12-12s12 5 12 12M22 40c0-7 5-12 12-12s10 5 10 12"/></symbol>
   </svg>
 
+
   <a class="skip-link" href="#main">본문 바로가기</a>
 
-  <!-- ===== Header: 6대 메뉴 + 상시 노출 '연수 문의' 버튼 ===== -->
+  <!-- 공통 상단 메뉴: 주요 사업 드롭다운 -->
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
       <a href="#top" class="brand" aria-label="쌤픽에듀 홈">
@@ -49,11 +49,18 @@
       <nav class="gnb" id="gnb" aria-label="주요 메뉴">
         <ul>
           <li><a href="#about" data-nav>회사 소개</a></li>
-          <li><a href="#programs" data-nav>교육 프로그램</a></li>
-          <li><a href="#cases" data-nav>운영 사례</a></li>
-          <li><a href="#instructors" data-nav>전문 강사진</a></li>
+          <li class="nav-business">
+            <button class="business-toggle" type="button" aria-expanded="false" aria-controls="businessMenu">주요 사업 <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+            <ul class="business-menu" id="businessMenu" aria-label="주요 사업"><li><a href="#businesses">전체 사업 한눈에 보기</a></li>
+              <li><a href="business-students.html">학생교육 프로그램</a></li>
+              <li><a href="business-teacher-training.html">교원 직무 연수</a></li>
+              <li><a href="business-visiting-training.html">찾아가는 교사 연수</a></li>
+              <li><a href="business-education-events.html">교육행사 운영</a></li>
+              <li><a href="business-lecture-lms.html">강의 전용 LMS 구축</a></li>
+            </ul>
+          </li>
+          <li><a href="programs.html">운영 사례·강사진</a></li>
           <li><a href="#faq" data-nav>자주 묻는 질문</a></li>
-          <li><a href="#contact" data-nav>연수·사업 문의</a></li>
         </ul>
         <a href="#contact" class="btn btn-primary gnb-cta">연수 문의</a>
       </nav>
@@ -63,6 +70,7 @@
       </button>
     </div>
   </header>
+
 
   <main id="main">
     <!-- ===== ① 첫 화면: 대표 문구(order3) + 현장 사진 1장 + 캡션(order4) ===== -->
@@ -74,12 +82,12 @@
            alt="AI미래교육박람회 메인 무대. 대형 화면에 ‘교실을 바꾸는 AI미래교육’ 특강회가 띄워져 있다.">
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="container hero-content">
-        <p class="eyebrow light reveal">AI · 에듀테크 기반 교원 연수 전문 교육기업</p>
-        <h1 id="heroTitle" class="reveal" data-delay="1">학교 현장에 적용하는<br><em>AI·에듀테크 연수</em></h1>
-        <p class="hero-lead reveal" data-delay="2">현직 교사 전문가와 전문 강사진이 함께합니다.<br>쌤픽에듀가 연수 기획부터 운영까지 지원합니다.</p>
-        <div class="hero-actions reveal" data-delay="3">
+        <p class="eyebrow light">AI · 에듀테크 기반 교육 전문기업</p>
+        <h1 id="heroTitle" class="">학생과 교사를 위한<br><em>AI·에듀테크 교육</em></h1>
+        <p class="hero-lead">현직 교사 전문가와 함께하는 학생교육·교원 연수.<br>교육행사와 LMS 구축까지, 기관의 목적에 맞게 지원합니다.</p>
+        <div class="hero-actions">
           <a href="#contact" class="btn btn-accent btn-lg">연수·사업 문의</a>
-          <a href="#cases" class="btn btn-ghost btn-lg">운영 사례 보기</a>
+          <a href="#businesses" class="btn btn-ghost btn-lg">주요 사업 살펴보기</a>
         </div>
       </div>
       <p class="hero-credit container">
@@ -93,71 +101,42 @@
     <section class="stats" id="stats" aria-label="핵심 실적">
       <div class="container">
         <div class="stats-card">
-          <div class="stat reveal">
-            <p class="stat-num"><span class="count" data-count="40">40</span><small>개</small></p>
-            <p class="stat-label">AI미래교육박람회<br>참여 에듀테크 기업</p>
+          <div class="stat">
+            <p class="stat-num"><span class="count" data-count="500">500</span><small>회</small></p>
+            <p class="stat-label">AI·에듀테크 기반<br>교원 연수 누적 운영</p>
           </div>
-          <div class="stat reveal" data-delay="1">
-            <p class="stat-num"><span class="count" data-count="50">50</span><small>개</small></p>
-            <p class="stat-label">AI미래교육박람회<br>운영 부스</p>
+          <div class="stat">
+            <p class="stat-num"><span class="count" data-count="100">100</span><small>회</small></p>
+            <p class="stat-label">학생 AI 체험·디지털 캠프·<br>해커톤 누적 운영</p>
           </div>
-          <div class="stat reveal" data-delay="2">
-            <p class="stat-num"><span class="count" data-count="1546">1,546</span><small>명</small></p>
-            <p class="stat-label">AI미래교육박람회<br>총 방문 인원</p>
-          </div>
-          <div class="stat reveal" data-delay="3">
+          <div class="stat">
             <p class="stat-num"><span class="count" data-count="1000">1,000</span><small>명 이상</small></p>
-            <p class="stat-label">AI미래교육박람회 당일<br>강연 수강생</p>
+            <p class="stat-label">각 분야 전문 교원 및<br>전문 강사 인력풀</p>
+          </div>
+          <div class="stat">
+            <p class="stat-num"><span class="count" data-count="1546">1,546</span><small>명</small></p>
+            <p class="stat-label">AI미래교육박람회 단일 행사<br>2026.06.20 방문 인원</p>
           </div>
         </div>
       </div>
     </section>
 
+<section class="section business-overview" id="businesses" aria-labelledby="businessTitle">
+      <div class="container"><div class="section-head split"><div><p class="eyebrow">주요 사업</p><h2 class="section-title" id="businessTitle">우리 기관에 필요한<br>교육을 찾아보세요</h2></div><p class="section-lead">학생의 첫 AI 경험부터 교사의 수업 변화,<br>교육행사와 온라인 학습 환경까지 함께합니다.</p></div>
+      <div class="business-grid"><a class="business-card" href="business-students.html"><span class="business-card-top"><span class="business-number">01</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><h3>학생교육 프로그램</h3><span class="business-audience">초·중·고 학생</span><p>로봇 체험부터 AI 해커톤까지, 직접 만들며 배우는 프로그램</p><span class="business-card-link">사업 자세히 보기</span></a><a class="business-card" href="business-teacher-training.html"><span class="business-card-top"><span class="business-number">02</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><h3>교원 직무 연수</h3><span class="business-audience">교원·연수 운영 기관</span><p>집합 연수, 실시간 온라인, 원격 콘텐츠 제작을 목적에 맞게</p><span class="business-card-link">사업 자세히 보기</span></a><a class="business-card" href="business-visiting-training.html"><span class="business-card-top"><span class="business-number">03</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><h3>찾아가는 교사 연수</h3><span class="business-audience">학교·교사 학습공동체</span><p>우리 학교의 환경과 수업 고민을 바탕으로 설계하는 방문 연수</p><span class="business-card-link">사업 자세히 보기</span></a><a class="business-card" href="business-education-events.html"><span class="business-card-top"><span class="business-number">04</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><h3>교육행사 운영</h3><span class="business-audience">학교·교육기관·기업</span><p>박람회, 해커톤, 워크숍의 기획부터 참가자 안내와 현장 운영까지</p><span class="business-card-link">사업 자세히 보기</span></a><a class="business-card" href="business-lecture-lms.html"><span class="business-card-top"><span class="business-number">05</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><h3>강의 전용 LMS 구축</h3><span class="business-audience">강의·연수를 운영하는 기관</span><p>과정과 학습자 관리에 필요한 플랫폼의 구축·운영 범위 설계</p><span class="business-card-link">사업 자세히 보기</span></a></div>
+      <div class="training-choice" aria-labelledby="trainingChoiceTitle"><h3 id="trainingChoiceTitle">어떤 교원 연수를 선택하면 좋을까요?</h3><div class="training-choice-grid"><a href="business-teacher-training.html"><strong>과정 기획·콘텐츠 제작이 필요하다면</strong><p>집합·실시간 온라인 연수와 원격 콘텐츠의 구성을 함께 준비합니다.</p><span>교원 직무 연수 보기 →</span></a><a href="business-visiting-training.html"><strong>우리 학교에서 함께 실습하고 싶다면</strong><p>학교의 기기·수업 환경과 교사 학습공동체의 주제에 맞춰 방문 연수를 준비합니다.</p><span>찾아가는 교사 연수 보기 →</span></a></div></div></div>
+    </section>
+    <section class="section home-proof" aria-labelledby="proofTitle"><div class="container proof-grid"><div><p class="eyebrow">현장에서 쌓은 경험</p><h2 class="section-title" id="proofTitle">설명보다 구체적인<br>운영 사례로 확인하세요</h2><p class="section-lead">학교의 체험 프로그램부터 교육 박람회까지.<br>대상과 일정, 프로그램 구성을 함께 소개합니다.</p><a class="link-arrow" href="programs.html">운영 사례·강사진 모두 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div><div class="proof-links"><a href="programs.html#case-expo"><span>교육행사 운영 · 2026.06.20</span><strong>AI미래교육박람회</strong><p>40개 기업 · 50개 부스 · 방문 1,546명</p></a><a href="programs.html#case-physical"><span>학생 AI 체험 · 2026.07.04</span><strong>남한 미래 챌린지</strong><p>신청 학생 69명 · 오전·오후 4개 프로그램</p></a></div></div></section>
+
     <!-- ===== 회사 소개 ===== -->
     <section class="section about" id="about">
       <div class="container">
-        <div class="about-grid">
-          <div class="about-sticky">
-            <p class="eyebrow reveal">회사 소개</p>
-            <h2 class="section-title reveal" data-delay="1">교육의 변화를 이해하고,<br><span class="accent">현장에 적용되는 연수</span>를<br>만듭니다.</h2>
-            <p class="section-lead reveal" data-delay="2">쌤픽에듀는 AI·에듀테크 분야를 중심으로 <strong>교원 연수와 교육행사를 기획·운영하는 교육기업</strong>입니다.</p>
-            <p class="section-desc reveal" data-delay="3">학교 현장에 대한 이해를 바탕으로, 교육기관의 목적과 참여 대상에 맞는 배움의 기회를 만듭니다.</p>
-          </div>
-          <div class="about-body">
-            <div class="about-intro reveal">
-              <h3>교원 연수 전문 기업</h3>
-              <p>교육기관의 목적과 대상에 맞춘 <strong>맞춤형 연수 설계부터 운영까지 One-Stop</strong>으로 지원합니다.</p>
-              <ul class="about-services" aria-label="쌤픽에듀 사업 범위">
-                <li class="about-service">
-                  <h4>교원 연수·콘텐츠</h4>
-                  <ul>
-                    <li>AI·디지털 교육 교원 연수 기획·운영</li>
-                    <li>원격 직무연수 콘텐츠 기획·제작</li>
-                    <li>실시간 온라인 연수 운영</li>
-                    <li>학교·기관 맞춤형 찾아가는 연수</li>
-                  </ul>
-                </li>
-                <li class="about-service">
-                  <h4>체험 프로그램·교육행사</h4>
-                  <ul>
-                    <li>AI·에듀테크 체험형 프로그램 운영</li>
-                    <li>박람회·해커톤·워크숍 등 교육행사 기획·운영</li>
-                  </ul>
-                </li>
-                <li class="about-service">
-                  <h4>전문 강사 네트워크</h4>
-                  <ul>
-                    <li>교육 전문 강사 매칭 및 강사풀 운영</li>
-                  </ul>
-                </li>
-              </ul>
-              <a href="#programs" class="link-arrow">교육 프로그램 살펴보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </div>
-            <div class="about-philosophy reveal">
-              <h3>학교와 교사의 변화가 시작되는 연수</h3>
-              <p>교사가 이해하고, 직접 경험하고, 수업에 적용할 수 있도록.<br>쌤픽에듀는 이를 연수 설계의 기준으로 삼습니다.</p>
-            </div>
-          </div>
+        <div class="about-content">
+          <p class="eyebrow">회사 소개</p>
+          <h2 class="section-title">교육의 변화를 이해하고, <span class="accent">현장에 적용되는 연수</span>를 만듭니다.</h2>
+          <p class="section-lead">쌤픽에듀는 AI·에듀테크 분야를 중심으로 <strong>교원 연수와 교육행사를 기획·운영하는 교육기업</strong>입니다.</p>
+          <p class="section-desc">학교 현장에 대한 이해를 바탕으로, 교육기관의 목적과 참여 대상에 맞는 배움의 기회를 제공합니다.</p>
+          <a class="link-arrow" href="programs.html#instructors">전문 강사풀과 매칭 방식 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>
@@ -165,256 +144,43 @@
     <!-- ===== 쌤픽에듀가 잘하는 것 ===== -->
     <section class="section strengths" aria-labelledby="strengthsTitle">
       <div class="container">
-        <div class="section-head center">
-          <p class="eyebrow reveal">쌤픽에듀가 잘하는 것</p>
-          <h2 class="section-title reveal" data-delay="1" id="strengthsTitle">수업 활용을 고려한 설계와<br>교육행사를 아우르는 운영</h2>
+        <div class="section-head strengths-head">
+          <p class="eyebrow">쌤픽에듀가 잘하는 것</p>
+          <h2 class="section-title" id="strengthsTitle">현장의 호응을 최고로 만드는 쌤픽에듀의 다섯 가지 힘</h2>
         </div>
         <ul class="strength-grid">
-          <li class="strength reveal"><svg class="icon" aria-hidden="true"><use href="#i-school"/></svg><h3>현장성</h3><p>교과·프로젝트 수업의 경험을 바탕으로 교사가 활용할 활동을 함께 구상합니다.</p></li>
-          <li class="strength reveal" data-delay="1"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><h3>전문성</h3><p>AI·에듀테크·바이브 코딩 등 주제에 맞는 전문가를 연결해 기술과 활용 방법의 이해를 돕습니다.</p></li>
-          <li class="strength reveal" data-delay="2"><svg class="icon" aria-hidden="true"><use href="#i-plan"/></svg><h3>기획력</h3><p>대상과 목적에 따라 소규모 연수, 체험 프로그램, 대규모 행사의 구성을 달리합니다.</p></li>
-          <li class="strength reveal" data-delay="3"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><h3>운영력</h3><p>강사 섭외부터 참가자 관리와 현장·온라인 진행까지 담당자의 준비와 실행을 지원합니다.</p></li>
-          <li class="strength reveal" data-delay="4"><svg class="icon" aria-hidden="true"><use href="#i-network"/></svg><h3>네트워크</h3><p>교사와 교육기업·기관의 협력을 통해 다양한 교육 도구와 서비스를 연수에 연결합니다.</p></li>
+          <li class="strength"><span class="strength-no">01</span><h3>현장성</h3><p>현직 교사와 교육 전문가가 함께 설계해 학교에서 바로 활용</p></li>
+          <li class="strength"><span class="strength-no">02</span><h3>전문성</h3><p>AI·에듀테크·바이브 코딩·디지털 수업 분야 전문 강사진 보유</p></li>
+          <li class="strength"><span class="strength-no">03</span><h3>기획력</h3><p>소규모 연수부터 대규모 박람회까지 목적에 맞춰 설계</p></li>
+          <li class="strength"><span class="strength-no">04</span><h3>운영력</h3><p>강사 섭외, 참가자 관리, 현장·온라인 운영을 통합 관리</p></li>
+          <li class="strength"><span class="strength-no">05</span><h3>네트워크</h3><p>현직 교사 전문가와 에듀테크 기업·기관을 잇는 교육 네트워크</p></li>
         </ul>
       </div>
     </section>
-
-    <!-- ===== ③ 교육 프로그램: 4카드 + 문의 유형 프리필 (order1) ===== -->
-    <section class="section programs" id="programs">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow reveal">교육 프로그램</p>
-          <h2 class="section-title reveal" data-delay="1">교육기관의 목적에 맞춰<br>연수 콘텐츠와 전문 강사진을 연결합니다</h2>
-        </div>
-        <div class="program-grid">
-          <article class="program reveal">
-            <span class="program-no">01</span>
-            <h3>교원 연수</h3>
-            <p class="program-sub">AI·디지털 수업 연수 기획 및 운영</p>
-            <ul class="tag-list"><li>AI·디지털 교육</li><li>교과·프로젝트 수업</li><li>찾아가는 맞춤형 연수</li></ul>
-            <p class="program-desc">생성형 AI와 디지털 도구를 교과수업과 프로젝트 활동에 활용할 수 있도록 연수 주제와 내용을 구성합니다.</p>
-            <a href="#contact" class="link-arrow" data-inquiry="교원 연수">교원 연수 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          </article>
-          <article class="program reveal" data-delay="1">
-            <span class="program-no">02</span>
-            <h3>학생 AI 체험</h3>
-            <p class="program-sub">피지컬 AI 체험과 AI 해커톤</p>
-            <ul class="tag-list"><li>피지컬 AI</li><li>로봇 · LEGO AI</li><li>AI 해커톤</li></ul>
-            <p class="program-desc">로봇과 LEGO AI를 직접 다루고, 문제 해결 과제와 결과물 제작을 경험하는 체험·해커톤 프로그램입니다.</p>
-            <a href="#contact" class="link-arrow" data-inquiry="학생 AI 체험">학생 AI 체험 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          </article>
-          <article class="program reveal" data-delay="2">
-            <span class="program-no">03</span>
-            <h3>학교 컨설팅</h3>
-            <p class="program-sub">찾아가는 학교 컨설팅</p>
-            <ul class="tag-list"><li>KERIS 찾아가는 학교 컨설팅</li><li>디지털 전환</li><li>AI·에듀테크 활용</li></ul>
-            <p class="program-desc">학교별 디지털 환경과 교원의 요구를 반영해 수업과 학교 운영에 필요한 AI·에듀테크 활용 방향을 함께 구상합니다.</p>
-            <a href="#contact" class="link-arrow" data-inquiry="학교 컨설팅">학교 컨설팅 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          </article>
-          <article class="program reveal" data-delay="3">
-            <span class="program-no">04</span>
-            <h3>교육행사 운영</h3>
-            <p class="program-sub">박람회 · 해커톤 · 워크숍</p>
-            <ul class="tag-list"><li>교육 박람회</li><li>해커톤</li><li>워크숍</li><li>교원 커뮤니티 연수</li></ul>
-            <p class="program-desc">기업 전시·체험, 교원 연수, 교육 사례 공유를 행사 목적에 맞게 구성합니다. 학교·교사·기업이 교류할 수 있는 프로그램을 운영합니다.</p>
-            <a href="#contact" class="link-arrow" data-inquiry="교육행사 운영">교육행사 운영 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          </article>
-          <article class="program reveal">
-            <span class="program-no">05</span>
-            <h3>AI 바이브 코딩</h3>
-            <p class="program-sub">AI 활용 코딩과 디지털 창작</p>
-            <ul class="tag-list"><li>AI 코딩</li><li>디지털 창작</li><li>수업 활용</li></ul>
-            <p class="program-desc">AI를 활용한 코딩과 디지털 창작 활동을 구성합니다. 참여 대상과 교육 목적에 맞춰 실제 수업에서 다룰 활동을 구상합니다.</p>
-            <a href="#contact" class="link-arrow" data-inquiry="AI 바이브 코딩">AI 바이브 코딩 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          </article>
-          <article class="program reveal" id="remote-training">
-            <span class="program-no">06</span>
-            <h3>원격 직무연수·콘텐츠</h3>
-            <p class="program-sub">콘텐츠 제작과 실시간 온라인 연수</p>
-            <ul class="tag-list"><li>직무연수 콘텐츠</li><li>실시간 연수</li><li>기획·촬영</li></ul>
-            <p class="program-desc">원격 직무연수의 주제·강사·콘텐츠를 구성하고 촬영과 제작을 지원합니다. 실시간 온라인 연수도 함께 운영합니다.</p>
-            <a href="#contact" class="link-arrow" data-inquiry="원격 직무연수·콘텐츠">원격 직무연수·콘텐츠 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== ④ 대표 운영 사례: Featured(claude) + dl(grok) + 상세 모달(gpt) ===== -->
-    <section class="section cases" id="cases">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow reveal">운영 사례</p>
-          <h2 class="section-title reveal" data-delay="1">현장에서 운영한 연수와 행사</h2>
-          <p class="section-lead reveal" data-delay="2">대상, 프로그램, 운영 규모를 함께 소개합니다. 사진이 있는 사례는 그 행사에서 찍은 현장입니다.</p>
-        </div>
-
-        <article class="case-featured reveal">
-          <div class="case-featured-media">
-            <figure>
-              <button type="button" class="zoomable" data-full="asset/img/expo-hall-1536-faces-blurred.png" data-caption="AI미래교육박람회 전시장 전경 · 50개 부스 운영" aria-label="전시장 전경 사진 크게 보기">
-                <img src="asset/img/expo-hall-1280-faces-blurred.webp" srcset="asset/img/expo-hall-768-faces-blurred.webp 768w, asset/img/expo-hall-1280-faces-blurred.webp 1280w" sizes="(min-width: 960px) 40vw, 100vw" width="1280" height="853" loading="lazy" alt="AI미래교육박람회 전시장 전경. 많은 참가자가 오가는 모습이며 얼굴은 식별할 수 없게 블러 처리되어 있다.">
-                <svg class="icon zoom-hint" aria-hidden="true"><use href="#i-zoom"/></svg>
-              </button>
-              <figcaption>박람회 전시장 전경 · 50개 부스 운영</figcaption>
-            </figure>
-            <figure>
-              <button type="button" class="zoomable" data-full="asset/img/expo-stage-1920.webp" data-caption="AI미래교육박람회 메인 무대 · '교실을 바꾸는 AI미래교육' 특강회 (AI미래교육연구회 × 쌤픽에듀)" aria-label="메인 무대 사진 크게 보기">
-                <img src="asset/img/expo-stage-1280.webp" srcset="asset/img/expo-stage-768.webp 768w, asset/img/expo-stage-1280.webp 1280w" sizes="(min-width: 960px) 40vw, 100vw" width="1280" height="853" loading="lazy" alt="대형 화면에 '교실을 바꾸는 AI미래교육' 특강회가 띄워져 있고 하단에 AI미래교육연구회와 쌤픽에듀가 적혀 있다.">
-                <svg class="icon zoom-hint" aria-hidden="true"><use href="#i-zoom"/></svg>
-              </button>
-              <figcaption>메인 무대 · AI미래교육연구회 × 쌤픽에듀</figcaption>
-            </figure>
-          </div>
-          <div class="case-featured-body">
-            <span class="case-kicker">대표 사례 · 교육행사 운영</span>
-            <h3>AI미래교육박람회 기획·운영</h3>
-            <p class="case-summary">AI와 에듀테크를 주제로 <strong>40개 에듀테크 기업이 참여하고 50개 부스를 운영해 총 1,546명이 방문</strong>한 박람회를 기획·운영했습니다. 당일 강연 수강생은 1,000명 이상이었습니다. 기업 전시·체험, 교원 연수, 교육 사례 공유로 학교와 교사, 에듀테크 기업을 연결했습니다.</p>
-            <dl class="facts">
-              <div><dt>일시</dt><dd>2026년 6월 20일(토) 09:00~17:00</dd></div>
-              <div><dt>장소</dt><dd>숙명여자대학교 제2캠퍼스 눈꽃광장홀</dd></div>
-              <div><dt>대상</dt><dd>전국 유·초·중·고·대·특 교육 종사자</dd></div>
-              <div><dt>프로그램</dt><dd>기업 전시·체험, 교원 연수, 교육 사례 공유</dd></div>
-              <div><dt>운영 규모</dt><dd>참여 기업 40개 · 부스 50개 · 방문 1,546명 · 강연 수강 1,000명 이상</dd></div>
-            </dl>
-            <button type="button" class="link-arrow" data-case="expo">운영 내용 자세히 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          </div>
-        </article>
-
-        <div class="case-grid">
-          <article class="case reveal">
-            <!-- 실제 현장 사진 확보 시 .case-visual 을 <img>로 교체 (학생 얼굴 공개 동의 확인) -->
-            <div class="case-visual v-student" aria-hidden="true"><svg><use href="#i-robot"/></svg><span>현장 사진 준비 중</span></div>
-            <div class="case-body">
-              <span class="case-kicker">학생 AI 체험</span>
-              <h3>AI·디지털 캠프<br>‘남한 미래 챌린지’</h3>
-              <p>2026년 7월 4일 남한고등학교에서 신청 학생 69명을 대상으로 운영했습니다. AI 자율주행, 생성형 AI 메이커톤, LEGO CS &amp; AI, 로보틱스를 주제로 오전·오후 4개 프로그램을 구성했습니다.</p>
-              <dl class="facts">
-                <div><dt>일시</dt><dd>2026년 7월 4일(토) 09:00~16:00</dd></div>
-                <div><dt>대상</dt><dd>남한고등학교 신청 학생 69명</dd></div>
-                <div><dt>프로그램</dt><dd>AI 자율주행 · 생성형 AI 메이커톤 · LEGO CS &amp; AI · 로보틱스</dd></div>
-              </dl>
-              <button type="button" class="link-arrow" data-case="physical">자세히 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-          </article>
-          <article class="case reveal" data-delay="1">
-            <div class="case-visual v-remote" aria-hidden="true"><svg><use href="#i-screen"/></svg><span>현장 사진 준비 중</span></div>
-            <div class="case-body">
-              <span class="case-kicker">교원 연수 · 원격교육</span>
-              <h3>교육부 인가 원격교육연수원<br>직무연수 제작 및 실시간 연수 운영</h3>
-              <p>교원의 실제 수업 활용을 중심으로 다양한 직무연수 콘텐츠를 기획·제작하고, 실시간 온라인 연수를 운영해왔습니다. 연수 주제 선정부터 강사 섭외, 콘텐츠 구성, 촬영·운영까지 전 과정을 지원합니다.</p>
-              <dl class="facts">
-                <div><dt>대상</dt><dd>교원</dd></div>
-                <div><dt>프로그램</dt><dd>원격 직무연수 콘텐츠 제작 · 실시간 온라인 연수</dd></div>
-                <div><dt>운영 규모</dt><dd>기획·섭외·촬영·운영 전 과정</dd></div>
-              </dl>
-              <button type="button" class="link-arrow" data-case="remote">자세히 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-          </article>
-          <article class="case reveal" data-delay="2">
-            <div class="case-visual v-consult" aria-hidden="true"><svg><use href="#i-house"/></svg><span>현장 사진 준비 중</span></div>
-            <div class="case-body">
-              <span class="case-kicker">학교 컨설팅</span>
-              <h3>KERIS 찾아가는<br>학교 컨설팅 다수 운영</h3>
-              <p>학교 현장의 디지털 전환과 AI·에듀테크 활용을 지원하기 위한 찾아가는 학교 컨설팅을 다수 운영했습니다. 학교별 환경과 교원의 요구를 반영한 현장 중심 프로그램을 제공합니다.</p>
-              <dl class="facts">
-                <div><dt>대상</dt><dd>학교 및 교원</dd></div>
-                <div><dt>프로그램</dt><dd>디지털 전환 · AI·에듀테크 활용 현장 컨설팅</dd></div>
-                <div><dt>운영 규모</dt><dd>다수 학교 방문 컨설팅</dd></div>
-              </dl>
-              <button type="button" class="link-arrow" data-case="keris">자세히 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-          </article>
-          <article class="case reveal" data-delay="3">
-            <div class="case-visual v-community" aria-hidden="true"><svg><use href="#i-people"/></svg><span>현장 사진 준비 중</span></div>
-            <div class="case-body">
-              <span class="case-kicker">교원 커뮤니티 · 플랫폼</span>
-              <h3>AI미래교육연구회 연수 운영 및<br>갓쌤연수원 사이트 위탁 운영</h3>
-              <p>AI·디지털 교육에 관심 있는 교원들을 대상으로 다양한 전문 연수를 운영하고 있으며, 교원 연수 플랫폼인 갓쌤연수원 사이트 위탁 운영을 통해 연수 콘텐츠와 교원을 지속적으로 연결하고 있습니다.</p>
-              <dl class="facts">
-                <div><dt>대상</dt><dd>AI·디지털 교육에 관심 있는 교원</dd></div>
-                <div><dt>프로그램</dt><dd>AI미래교육연구회 연수 · 갓쌤연수원 위탁 운영</dd></div>
-                <div><dt>운영 규모</dt><dd>연구회 연수 다수 · 플랫폼 상시 운영</dd></div>
-              </dl>
-              <button type="button" class="link-arrow" data-case="community">자세히 보기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== ⑤ 전문 강사진: 강사풀/구성/강의 주제/대표 수업·연수 표 (grok, order2 ⑤) ===== -->
-    <section class="section instructors" id="instructors">
-      <div class="container">
-        <div class="section-head split">
-          <div>
-            <p class="eyebrow reveal">전문 강사진</p>
-            <h2 class="section-title reveal" data-delay="1">현장을 아는<br>우수한 전문 강사풀</h2>
-          </div>
-          <p class="section-lead reveal" data-delay="2">좋은 연수의 핵심은 <strong>좋은 강사와 현장성 있는 콘텐츠</strong>입니다. 현직 교사 중심의 수업 전문가와 AI 분야 전문가, 에듀테크 기업·기관의 강사를 주제에 맞게 연결합니다.</p>
-        </div>
-        <!-- 강사 사진·이름 확보 시 카드형으로 전환 가능. 현재는 자료에 있는 분야 정보만 표기 -->
-        <div class="board reveal" role="table" aria-label="전문 강사풀 구성">
-          <div class="board-head" role="row">
-            <span role="columnheader">강사풀</span><span role="columnheader">구성</span><span role="columnheader">강의 주제</span><span role="columnheader">연수에서의 역할</span>
-          </div>
-          <div class="board-row" role="row">
-            <h3 role="cell">AI 전문 강사풀</h3>
-            <p role="cell" data-label="구성"><span class="pool-badge">AI 분야 전문가</span></p>
-            <p role="cell" data-label="강의 주제">생성형 AI · 피지컬 AI · AI 리터러시</p>
-            <p role="cell" data-label="연수에서의 역할">AI 기술의 원리와 활용 방법을 이해하는 데 도움을 줍니다.</p>
-          </div>
-          <div class="board-row" role="row">
-            <h3 role="cell">AI 수업 전문가 강사풀</h3>
-            <p role="cell" data-label="구성"><span class="pool-badge is-teacher">현직 교사 중심</span></p>
-            <p role="cell" data-label="강의 주제">교과 수업 적용 · 프로젝트 수업</p>
-            <p role="cell" data-label="연수에서의 역할">수업 경험을 바탕으로 교과·프로젝트 활동의 적용 방향을 제안합니다.</p>
-          </div>
-          <div class="board-row" role="row">
-            <h3 role="cell">AI 바이브 코딩 전문 강사풀</h3>
-            <p role="cell" data-label="구성"><span class="pool-badge is-teacher">현직 교사 기반</span></p>
-            <p role="cell" data-label="강의 주제">AI 활용 코딩 · 디지털 창작</p>
-            <p role="cell" data-label="연수에서의 역할">코딩과 디지털 창작 활동을 수업으로 구성하는 방법을 안내합니다.</p>
-          </div>
-          <div class="board-row" role="row">
-            <h3 role="cell">에듀테크 기업·기관 강사 네트워크</h3>
-            <p role="cell" data-label="구성"><span class="pool-badge">약 50개 기업·기관 연계</span></p>
-            <p role="cell" data-label="강의 주제">에듀테크 도구 · 교육 서비스 활용</p>
-            <p role="cell" data-label="연수에서의 역할">교육 도구와 서비스의 특징, 활용 방법을 안내합니다.</p>
-          </div>
-        </div>
-        <div class="instructor-cta reveal">
-          <p>연수 주제와 대상을 알려주시면 가장 적합한 강사를 매칭해 드립니다.</p>
-          <a href="#contact" class="btn btn-outline" data-inquiry="강사 섭외">강사 섭외 문의</a>
-        </div>
-      </div>
-    </section>
-
-    
-
 
     <!-- ===== FAQ: 구조는 gem 차용. 답변은 제공 자료(order_main.txt) 범위에서만 작성 — 공개 전 클라이언트 확인 필요 ===== -->
     <section class="section faq" id="faq" aria-labelledby="faqTitle">
       <div class="container narrow">
         <div class="section-head center">
-          <p class="eyebrow reveal">자주 묻는 질문</p>
-          <h2 class="section-title reveal" data-delay="1" id="faqTitle">연수 담당자가 자주 묻는 질문</h2>
+          <p class="eyebrow">자주 묻는 질문</p>
+          <h2 class="section-title" id="faqTitle">교육기관 담당자가 자주 묻는 질문</h2>
         </div>
-        <div class="faq-list reveal">
+        <div class="faq-list">
           <details class="faq-item">
             <summary>어떤 대상의 연수와 프로그램이 가능한가요?</summary>
-            <div class="faq-answer"><p>교원 연수, 학생 AI 체험, 학교 컨설팅, 교육행사 운영을 지원합니다. <a href="#programs">프로그램별 내용 살펴보기</a></p></div>
+            <div class="faq-answer"><p>학생교육 프로그램, 교원 직무 연수, 찾아가는 교사 연수, 교육행사 운영, 강의 전용 LMS 구축을 지원합니다. 각 사업별 내용은 <a href="#businesses">주요 사업 안내</a>에서 확인할 수 있습니다.</p></div>
           </details>
           <details class="faq-item">
             <summary>온라인 연수도 운영하나요?</summary>
-            <div class="faq-answer"><p>네. 원격 직무연수 콘텐츠 제작과 실시간 온라인 연수를 지원합니다. <a href="#remote-training">온라인 연수·콘텐츠 지원 내용 보기</a></p></div>
+            <div class="faq-answer"><p>네. 원격 직무연수 콘텐츠 제작과 실시간 온라인 연수를 지원합니다. <a href="business-teacher-training.html">온라인 연수·콘텐츠 지원 내용 보기</a></p></div>
           </details>
           <details class="faq-item">
             <summary>강사진은 어떻게 구성되나요?</summary>
-            <div class="faq-answer"><p>AI·수업·바이브 코딩 분야 전문가와 기업·기관 강사 네트워크로 구성됩니다. <a href="#instructors">강사풀 구성과 전문 분야 보기</a></p></div>
+            <div class="faq-answer"><p>AI·수업·바이브 코딩 분야 전문가와 기업·기관 강사 네트워크로 구성됩니다. <a href="programs.html#instructors">강사풀 구성과 전문 분야 보기</a></p></div>
           </details>
           <details class="faq-item">
             <summary>어느 규모까지 운영할 수 있나요?</summary>
-            <div class="faq-answer"><p>소규모 교원 연수부터 박람회 등 대규모 교육행사까지 운영한 경험이 있습니다. <a href="#cases">사례별 프로그램과 운영 규모 보기</a></p></div>
+            <div class="faq-answer"><p>소규모 교원 연수부터 박람회 등 대규모 교육행사까지 운영한 경험이 있습니다. <a href="programs.html#cases">사례별 프로그램과 운영 규모 보기</a></p></div>
           </details>
           <details class="faq-item">
             <summary>문의 후 진행 절차는 어떻게 되나요?</summary>
@@ -429,83 +195,59 @@
       <div class="container">
         <div class="contact-grid">
           <div class="contact-info">
-            <p class="eyebrow reveal">연수·사업 문의</p>
-            <h2 class="section-title reveal" data-delay="1">AI·에듀테크 교원 연수의<br>기획부터 운영까지,<br>쌤픽에듀가 함께하겠습니다.</h2>
-            <p class="section-lead reveal" data-delay="2">맞춤형 연수 신청, 행사 운영 문의, 제안 요청을 받습니다. 대상·주제·인원·일정을 남겨주시면 기관에 맞는 프로그램을 제안드립니다.</p>
-            <ol class="steps reveal" data-delay="3">
+            <p class="eyebrow">연수·사업 문의</p>
+            <h2 class="section-title">기관에 필요한 교육,<br>함께 구체화하겠습니다.</h2>
+            <p class="section-lead">기관명·담당자명·이메일·문의 유형만으로 상담을 시작할 수 있습니다. 정해진 내용이 있다면 선택 항목에 함께 알려주세요.</p>
+            <ol class="steps">
               <li><span>1</span><div><strong>문의 내용 정리</strong><p>대상과 주제, 인원과 일정을 작성해 주세요. 미정인 항목은 비워 두셔도 됩니다.</p></div></li>
               <li><span>2</span><div><strong>프로그램 제안</strong><p>목적에 맞는 연수 방향과 강사진을 제안드립니다.</p></div></li>
               <li><span>3</span><div><strong>강사 매칭 · 설계</strong><p>현직 교사·전문 강사풀에서 적합한 강사를 연결합니다.</p></div></li>
               <li><span>4</span><div><strong>운영</strong><p>현장·온라인 운영과 참가자 관리까지 함께합니다.</p></div></li>
             </ol>
             <!-- config.js 에 값이 있을 때만 표시 -->
-            <div class="contact-direct reveal" id="contactDirect" hidden></div>
+            <div class="contact-direct" id="contactDirect" hidden></div>
           </div>
 
-          <form class="contact-form reveal" id="inquiryForm" novalidate>
+          <form class="contact-form" id="inquiryForm" novalidate>
             <div class="form-body" id="formBody">
+              <p class="form-intro">별표(*) 항목은 필수입니다. 선택 항목은 비워 두셔도 됩니다.</p>
               <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-              <div class="form-row two">
-                <div class="field">
+<div class="form-row two"><div class="field">
                   <label for="org">기관명 <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></label>
                   <input type="text" id="org" name="org" required maxlength="80" autocomplete="organization" placeholder="예) ○○고등학교 / ○○교육지원청">
                   <p class="field-error" id="org-error" hidden></p>
-                </div>
-                <div class="field">
+                </div><div class="field">
                   <label for="name">담당자명 <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></label>
                   <input type="text" id="name" name="name" required maxlength="40" autocomplete="name" placeholder="성함">
                   <p class="field-error" id="name-error" hidden></p>
-                </div>
-              </div>
-              <div class="form-row two">
-                <div class="field">
-                  <label for="phone">연락처 <span>(선택)</span></label>
-                  <input type="tel" id="phone" name="phone" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000">
-                  <p class="field-error" id="phone-error" hidden></p>
-                </div>
-                <div class="field">
+                </div></div><div class="form-row two"><div class="field">
                   <label for="email">이메일 <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></label>
                   <input type="email" id="email" name="email" required maxlength="80" autocomplete="email" placeholder="name@school.kr">
                   <p class="field-error" id="email-error" hidden></p>
-                </div>
-              </div>
-              <div class="form-row two">
-                <div class="field">
+                </div><div class="field">
                   <label for="type">문의 유형 <i aria-hidden="true">*</i><span class="sr-only">(필수)</span></label>
-                  <select id="type" name="type" required>
-                    <option value="">선택해 주세요</option>
-                    <option>교원 연수</option>
-                    <option>학생 AI 체험</option>
-                    <option>학교 컨설팅</option>
-                    <option>교육행사 운영</option>
-                    <option>AI 바이브 코딩</option><option>원격 직무연수·콘텐츠</option><option>강사 섭외</option>
-                    <option>제안 · 기타</option>
-                  </select>
+                  <select id="type" name="type" required><option value="">선택해 주세요</option><option>학생교육 프로그램</option><option>교원 직무 연수</option><option>찾아가는 교사 연수</option><option>교육행사 운영</option><option>강의 전용 LMS 구축</option><option>강사 섭외</option><option>제안 · 기타</option></select>
                   <p class="field-error" id="type-error" hidden></p>
-                </div>
-                <div class="field">
-                  <label for="target">연수 대상 <span>(선택)</span></label>
+                </div></div><details class="optional-fields" id="optionalFields"><summary><span id="optionalTitle">상담에 필요한 정보 더하기</span> <span class="optional-badge" id="optionalCount">선택</span></summary><div class="optional-content"><p id="inquiryHint" class="field-help" aria-live="polite">아직 정해지지 않은 내용은 비워 두셔도 됩니다.</p><div class="form-row two"><div class="field">
+                  <label for="phone">연락처 <span>(선택)</span></label>
+                  <input type="tel" id="phone" name="phone" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000">
+                  <p class="field-error" id="phone-error" hidden></p>
+                </div><div class="field">
+                  <label for="target"><span id="targetLabel">교육 대상</span> <span>(선택)</span></label>
                   <input type="text" id="target" name="target" maxlength="60" placeholder="예) 초등 교원 / 고등학생 / 관리자">
-                </div>
-              </div>
-              <div class="form-row three">
-                <div class="field">
-                  <label for="topic">희망 주제 <span>(선택)</span></label>
+                </div></div><div class="field">
+                  <label for="topic"><span id="topicLabel">희망 주제</span> <span>(선택)</span></label>
                   <input type="text" id="topic" name="topic" maxlength="120" placeholder="예) 생성형 AI 수업 활용">
-                </div>
-                <div class="field">
-                  <label for="headcount">예상 인원 <span>(선택)</span></label>
+                </div><div class="form-row two"><div class="field">
+                  <label for="headcount"><span id="headcountLabel">예상 인원</span> <span>(선택)</span></label>
                   <input type="text" id="headcount" name="headcount" maxlength="20" inputmode="numeric" placeholder="예) 30명">
-                </div>
-                <div class="field">
-                  <label for="schedule">희망 일정 <span>(선택)</span></label>
+                </div><div class="field">
+                  <label for="schedule"><span id="scheduleLabel">희망 일정</span> <span>(선택)</span></label>
                   <input type="text" id="schedule" name="schedule" maxlength="80" placeholder="예) 2026년 11월 중">
-                </div>
-              </div>
-              <div class="field">
+                </div></div><div class="field">
                 <label for="message">상세 내용 <span>(선택)</span></label>
-                <textarea id="message" name="message" rows="5" maxlength="2000" placeholder="연수 목적, 운영 방식(집합/온라인), 예산 범위 등 참고할 내용을 자유롭게 적어주세요."></textarea>
-              </div>
+                <textarea id="message" name="message" rows="4" maxlength="2000" placeholder="연수 목적, 운영 방식(집합/온라인), 예산 범위 등 참고할 내용을 자유롭게 적어주세요."></textarea>
+              </div></div></details>
               <!-- 스팸 방지용 숨김 필드 -->
               <div class="hp" aria-hidden="true">
                 <label for="website">웹사이트</label>
@@ -526,6 +268,7 @@
               </div>
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn" disabled>문의하기</button>
+                <p class="form-note" id="formNote" role="status">자동 접수 상태를 확인 중입니다. 연결되지 않으면 아래 이메일로 문의해 주세요.</p>
               </div>
             </div>
 
@@ -553,7 +296,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <div class="footer-logo"><img src="asset/img/logo.webp" alt="쌤픽에듀" width="1148" height="356"></div>
-          <p>AI·에듀테크 기반 교원 연수 전문 교육기업<br>SSAMPICK EDU</p>
+          <p>AI·에듀테크 기반 교육 전문기업<br>SSAMPICK EDU</p>
           <p class="footer-tag">AI · 에듀테크 · 교원연수 · 교육행사 · 전문강사 네트워크</p>
         </div>
         <div class="footer-cols">
@@ -561,32 +304,30 @@
             <h4>바로가기</h4>
             <ul>
               <li><a href="#about">회사 소개</a></li>
-              <li><a href="#programs">교육 프로그램</a></li>
-              <li><a href="#cases">운영 사례</a></li>
-              <li><a href="#instructors">전문 강사진</a></li>
+              <li><a href="programs.html">운영 사례·강사진</a></li>
               <li><a href="#contact">연수·사업 문의</a></li>
             </ul>
           </nav>
           <div>
             <h4>사업 분야</h4>
             <ul>
-              <li>AI·디지털 교육 교원 연수</li>
-              <li>원격 직무연수 제작·운영</li>
-              <li>학생 피지컬 AI 체험</li>
-              <li>찾아가는 학교 컨설팅</li>
-              <li>교육 박람회·행사 운영</li>
+              <li><a href="business-students.html">학생교육 프로그램</a></li>
+              <li><a href="business-teacher-training.html">교원 직무 연수</a></li>
+              <li><a href="business-visiting-training.html">찾아가는 교사 연수</a></li>
+              <li><a href="business-education-events.html">교육행사 운영</a></li>
+              <li><a href="business-lecture-lms.html">강의 전용 LMS 구축</a></li>
             </ul>
           </div>
           <div>
             <h4>연락처</h4>
-            <ul id="footerContact">
+            <ul id="footerContact"><li><a data-inquiry-email href="mailto:ij7404613@gmail.com">ij7404613@gmail.com</a></li>
               <li><a href="#contact">연수 문의 양식</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="biz" id="companyDetails"></p>
+        <p class="biz" id="companyDetails">상호: 쌤픽에듀</p>
         <p class="legal">
           <button type="button" class="text-btn" data-open="privacyPolicyDialog">개인정보 처리방침</button>
           <span>© <span id="year">2026</span> SSAMPICK EDU. All rights reserved.</span>
@@ -595,23 +336,15 @@
     </div>
   </footer>
 
+
   <a href="#contact" class="floating-cta">연수 문의</a>
   <button class="to-top" id="toTop" type="button" aria-label="맨 위로"><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button>
 
   <!-- 사진 라이트박스 -->
-  <dialog class="dialog dialog-photo" id="photoDialog" aria-labelledby="photoCaption">
-    <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
-    <figure>
-      <img id="photoImg" src="" alt="">
-      <figcaption id="photoCaption"></figcaption>
-    </figure>
-  </dialog>
+
 
   <!-- 사례 상세 -->
-  <dialog class="dialog dialog-case" id="caseDialog" aria-labelledby="caseDialogTitle">
-    <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
-    <div class="dialog-content" id="caseDialogContent"></div>
-  </dialog>
+
 
   <!-- 수집·이용 동의: 핵심 정보 -->
   <dialog class="dialog dialog-text" id="privacyDialog" aria-labelledby="privacyTitle">
@@ -629,6 +362,7 @@
     </div>
   </dialog>
 
+
   <dialog class="dialog dialog-text" id="transferDialog" aria-labelledby="transferTitle">
     <form method="dialog"><button class="dialog-close" type="submit" aria-label="닫기"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form>
     <div class="dialog-content">
@@ -638,6 +372,7 @@
       <h3>거부 방법 및 영향</h3><p>국외 이전 동의란을 선택하지 않으면 이전을 거부할 수 있습니다. 거부 시 이 온라인 양식을 통한 문의 전송은 이용할 수 없습니다. 동의 후 철회는 개인정보 문의 이메일로 요청할 수 있습니다.</p>
     </div>
   </dialog>
+
 
   <!-- 하단 상세 처리방침 -->
   <dialog class="dialog dialog-text" id="privacyPolicyDialog" aria-labelledby="privacyPolicyTitle">
@@ -667,17 +402,18 @@
       <h3>8. 안전성 확보 조치</h3>
       <p>운영 시 담당자에 한해 접근권한을 부여하고, 계정의 2단계 인증과 안전한 비밀번호, HTTPS 전송을 적용합니다. 문의 사본의 보관 위치와 삭제 주기를 관리하고, 담당자 교육과 권한 점검을 실시합니다. 이 조치는 접수 활성화 전에 운영 계정과 배포 환경에 적용합니다.</p>
       <h3>9. 자동 수집 및 외부 서비스</h3>
-      <p>문의 입력 내용을 브라우저의 로컬 저장소에 영구 저장하지 않으며, 발송용 Apps Script 코드에 문의 본문을 실행 로그로 남기는 명령을 두지 않습니다. 또한 별도의 광고·분석 쿠키를 사용하지 않습니다. 현재 글꼴을 제공하는 외부 CDN(jsDelivr)에 접속할 때 IP 주소와 브라우저 접속 정보가 전달될 수 있습니다. 호스팅 서비스의 접속 로그, 글꼴 CDN 및 Google 서비스의 운영·보안 기능이 처리하는 정보와 법적 근거는 실제 배포 설정을 확인해 안내합니다. CAPTCHA 등 추가 외부 서비스를 사용하는 경우 제공자·수집 항목·국외 이전 정보를 먼저 반영합니다.</p>
+      <p>문의 입력 내용을 브라우저의 로컬 저장소에 영구 저장하지 않으며, 발송용 Apps Script 코드에 문의 본문을 실행 로그로 남기는 명령을 두지 않습니다. 또한 별도의 광고·분석 쿠키를 사용하지 않습니다. 글꼴은 이 웹사이트에서 직접 제공하며 외부 글꼴 CDN에 접속하지 않습니다. 호스팅 서비스의 접속 로그 및 Google 서비스의 운영·보안 기능이 처리하는 정보와 법적 근거는 실제 배포 설정을 확인해 안내합니다. CAPTCHA 등 추가 외부 서비스를 사용하는 경우 제공자·수집 항목·국외 이전 정보를 먼저 반영합니다.</p>
       <h3>10. 개인정보 보호책임자 및 문의처</h3>
-      <p>개인정보처리자: 쌤픽에듀<br>개인정보 보호책임자: <span id="privacyOfficer">성명·직책 확정 후 공개 예정</span><br>권리 행사 및 개인정보 문의: <a href="mailto:ij7404613@gmail.com">ij7404613@gmail.com</a></p>
+      <p>개인정보처리자: 쌤픽에듀<br>개인정보 보호책임자: <span id="privacyOfficer">성명·직책 확정 후 공개 예정</span><br>권리 행사 및 개인정보 문의: <a data-inquiry-email href="mailto:ij7404613@gmail.com">ij7404613@gmail.com</a></p>
       <h3>11. 피해 구제</h3>
       <p>개인정보침해 신고·상담: <a href="https://privacy.kisa.or.kr/" target="_blank" rel="noopener noreferrer">개인정보침해신고센터</a> (118)<br>분쟁 조정: <a href="https://www.kopico.go.kr/" target="_blank" rel="noopener noreferrer">개인정보분쟁조정위원회</a> (1833-6972)</p>
       <h3>12. 시행 및 변경</h3>
       <p id="privacyDate">시행일: 운영 정보 확정 후 공개 예정</p>
       <p>변경 시 시행일과 변경 내용을 이 페이지에 공개하고 이전 방침을 확인할 수 있도록 보관합니다. 동의가 필요한 처리 변경은 시행 전에 별도 동의를 받습니다.</p>
-      <p class="policy-note">작성 기준: 개인정보보호위원회 개인정보 처리방침 작성지침(2026.4. 개정). 초안 작성일: 2026년 10월 2일.</p>
+      <p class="policy-note">작성 기준: 개인정보보호위원회 개인정보 처리방침 작성지침(2026.4. 개정). 최초 작성일: 2026년 10월 2일.</p>
     </div>
   </dialog>
+
 
   <script src="asset/js/config.js"></script>
   <script src="asset/js/inquiry-transport.js" defer></script>

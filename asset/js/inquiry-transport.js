@@ -27,6 +27,11 @@
             !/^https:\/\/(?:script\.google\.com|[a-z0-9-]+\.googleusercontent\.com)$/.test(event.origin)) return;
         // HtmlService는 중첩 iframe을 사용하므로 nonce로 첫 응답을 확인한 뒤 source를 고정합니다.
         if (message.kind === 'ready' && !remote && event.source) {
+          if (message.error === 'NOT_CONFIGURED') {
+            cleanup();
+            resolve({ ok: false, code: 'NOT_CONFIGURED' });
+            return;
+          }
           stage = 'server-response';
           remote = event.source;
           remote.postMessage({ channel: channel, kind: 'submit', payload: payload }, event.origin);

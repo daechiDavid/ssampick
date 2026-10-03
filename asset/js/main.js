@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SSAMPICK EDU — mix_fable / main.js
+   SSAMPICK EDU — shared interactions
    의존성 없음. 모든 데이터는 제공 자료(order_main.txt) 범위에서만 작성.
    ========================================================================== */
 (function () {
@@ -32,6 +32,7 @@
     $$('main, .site-footer, .floating-cta, .to-top').forEach(function (el) { el.inert = open; });
     menuToggle.setAttribute('aria-expanded', String(open));
     menuToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    if (!open && businessNav) setBusinessMenu(false);
   }
   menuToggle.addEventListener('click', function () {
     setMenu(!header.classList.contains('menu-open'));
@@ -41,7 +42,7 @@
     if (!header.classList.contains('menu-open')) return;
     if (e.key === 'Escape') { setMenu(false); menuToggle.focus(); }
     if (e.key === 'Tab') {
-      var controls = [menuToggle].concat($$('a, button', gnb));
+      var controls = [menuToggle].concat($$('a, button', gnb).filter(function (el) { return el.getClientRects().length > 0; }));
       var i = controls.indexOf(document.activeElement);
       var next = e.shiftKey ? i - 1 : i + 1;
       if (i < 0 || next < 0 || next >= controls.length) {
@@ -51,6 +52,46 @@
   });
   window.addEventListener('resize', function () {
     if (window.innerWidth > 960 && header.classList.contains('menu-open')) setMenu(false);
+  });
+
+  /* 주요 사업: 마우스, 터치 및 키보드로 여닫는 탐색 메뉴 */
+  var businessNav = $('.nav-business');
+  var businessToggle = $('.business-toggle');
+  var businessOpenedByHover = false;
+  function setBusinessMenu(open) {
+    businessNav.classList.toggle('is-open', open);
+    businessToggle.setAttribute('aria-expanded', String(open));
+    if (!open) businessOpenedByHover = false;
+  }
+  businessToggle.addEventListener('click', function (e) {
+    if (e.detail > 0 && businessOpenedByHover) {
+      businessOpenedByHover = false;
+      return;
+    }
+    setBusinessMenu(!businessNav.classList.contains('is-open'));
+  });
+  businessNav.addEventListener('mouseenter', function () {
+    if (window.matchMedia('(hover: hover) and (min-width: 961px)').matches && !businessNav.classList.contains('is-open')) {
+      setBusinessMenu(true);
+      businessOpenedByHover = true;
+    }
+  });
+  businessNav.addEventListener('mouseleave', function () {
+    if (window.innerWidth > 960 && !businessNav.contains(document.activeElement)) setBusinessMenu(false);
+  });
+  businessNav.addEventListener('focusout', function (e) {
+    if (!businessNav.contains(e.relatedTarget)) setBusinessMenu(false);
+  });
+  businessNav.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && businessNav.classList.contains('is-open')) {
+      e.preventDefault(); e.stopPropagation(); setBusinessMenu(false); businessToggle.focus();
+    }
+    if (e.key === 'ArrowDown' && e.target === businessToggle) {
+      e.preventDefault(); setBusinessMenu(true); $('a', businessNav).focus();
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (!businessNav.contains(e.target)) setBusinessMenu(false);
   });
 
   /* ---------------- 앵커 스크롤 (헤더 높이 보정) ---------------- */
@@ -65,7 +106,9 @@
     var top = target.getBoundingClientRect().top + window.pageYOffset - headerH();
     if (id === '#top') top = 0;
     window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
-    if (history.replaceState) history.replaceState(null, '', id);
+    if (history.pushState && location.hash !== id) history.pushState(null, '', id);
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
   });
 
   /* ---------------- 스크롤: 헤더 / 맨 위로 ---------------- */
@@ -98,54 +141,51 @@
     sections.forEach(function (s) { spy.observe(s); });
   }
 
-  /* ---------------- Reveal + 카운트업 ---------------- */
-  var reveals = $$('.reveal');
-  $$('.service-list .reveal').forEach(function (li, i) { li.style.setProperty('--i', i); });
-
-  function countUp(el) {
-    var end = parseInt(el.getAttribute('data-count'), 10) || 0;
-    if (reduceMotion) { el.textContent = end.toLocaleString('ko-KR'); return; }
-    var start = null, dur = 1400;
-    function step(ts) {
-      if (!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(end * eased).toLocaleString('ko-KR');
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  if ('IntersectionObserver' in window && !reduceMotion) {
-    var ro = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        en.target.classList.add('in');
-        $$('.count', en.target).forEach(countUp);
-        obs.unobserve(en.target);
+  /* Stable numbers remain readable without animation or JavaScript. */
+  var floating = $('.floating-cta');
+  if (floating && 'IntersectionObserver' in window) {
+    var visibleAreas = new Set();
+    var ctaObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) visibleAreas.add(entry.target); else visibleAreas.delete(entry.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
-    reveals.forEach(function (el) { ro.observe(el); });
-  } else {
-    reveals.forEach(function (el) { el.classList.add('in'); });
-    $$('.count').forEach(countUp);
+      floating.hidden = visibleAreas.size > 0;
+    }, { rootMargin: '-72px 0px 0px 0px' });
+    $$('.hero-actions, #contact, .business-contact, .site-footer').forEach(function (el) { ctaObserver.observe(el); });
   }
+
+  function openLinkedCase() {
+    var id = location.hash.slice(1);
+    if (!/^case-[a-z]+$/.test(id)) return;
+    var article = document.getElementById(id);
+    var details = article && $('details', article);
+    if (details) details.open = true;
+  }
+  openLinkedCase();
+  window.addEventListener('hashchange', openLinkedCase);
 
   /* ---------------- 문의 유형 프리필 (data-inquiry) ---------------- */
   var typeSelect = $('#type');
+  var requestedInquiry = new URLSearchParams(window.location.search).get('inquiry');
+  if (typeSelect && requestedInquiry && $$('option', typeSelect).some(function (o) { return o.value === requestedInquiry; })) {
+    typeSelect.value = requestedInquiry;
+  }
   $$('[data-inquiry]').forEach(function (el) {
     el.addEventListener('click', function () {
       var v = el.getAttribute('data-inquiry');
-      if (!typeSelect) return;
+      if (!typeSelect) {
+        el.href = 'index.html?inquiry=' + encodeURIComponent(v) + '#contact';
+        return;
+      }
       var has = $$('option', typeSelect).some(function (o) { return o.value === v || o.textContent === v; });
       if (has) { typeSelect.value = v; clearError(typeSelect); }
       showForm();
+      updateInquiryContext();
     });
   });
 
   /* ---------------- Dialog 공통 ---------------- */
   var lastFocus = null;
-  var pendingInquiry = null;
   function openDialog(dlg) {
     if (!dlg) return;
     lastFocus = document.activeElement;
@@ -158,12 +198,7 @@
   $$('dialog').forEach(function (dlg) {
     dlg.addEventListener('close', function () {
       document.body.classList.remove('no-scroll');
-      if (pendingInquiry) {
-        var v = pendingInquiry; pendingInquiry = null;
-        typeSelect.value = v; clearError(typeSelect); showForm();
-        $('#contact').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-        typeSelect.focus({ preventScroll: true });
-      } else if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
     });
     // 배경 클릭 시 닫기
     dlg.addEventListener('click', function (e) {
@@ -187,112 +222,13 @@
       openDialog(photoDialog);
     });
   });
-  photoDialog.addEventListener('close', function () { photoImg.removeAttribute('src'); });
-
-  /* ---------------- 사례 상세 (제공 자료 범위 내) ---------------- */
-  var CASES = {
-    expo: {
-      kicker: '교육행사 운영',
-      title: 'AI미래교육박람회 기획·운영',
-      image: { src: 'asset/img/expo-stage-1280.webp', alt: "박람회 메인 무대. '교실을 바꾸는 AI미래교육' 특강회 화면과 AI미래교육연구회·쌤픽에듀 로고." },
-      body: [
-        'AI와 에듀테크를 주제로 40개 에듀테크 기업이 참여하고 50개 부스를 운영해 총 1,546명이 방문한 박람회를 기획·운영했습니다.',
-        '기업 전시·체험, 교원 연수, 교육 사례 공유를 진행했으며, 당일 강연 수강생은 1,000명 이상이었습니다.'
-      ],
-      facts: [['일시', '2026년 6월 20일(토) 09:00~17:00'], ['장소', '숙명여자대학교 제2캠퍼스 눈꽃광장홀'], ['대상', '전국 유·초·중·고·대·특 교육 종사자'], ['운영 규모', '참여 기업 40개 · 부스 50개 · 방문 1,546명 · 강연 수강 1,000명 이상']],
-      inquiry: '교육행사 운영'
-    },
-    physical: {
-      kicker: '학생 AI 체험',
-      title: 'AI·디지털 캠프 ‘남한 미래 챌린지’',
-      body: [
-        '2026년 7월 4일 남한고등학교에서 ‘남한 미래 챌린지’를 운영했습니다. 신청 학생은 69명이었습니다.',
-        '오전에는 AI 자율주행과 생성형 AI 메이커톤, 오후에는 LEGO CS & AI와 로보틱스를 진행했습니다.'
-      ],
-      facts: [['일시', '2026년 7월 4일(토) 09:00~16:00'], ['장소', '남한고등학교 제1·제2과학실'], ['대상', '신청 학생 69명']],
-      programs: [
-        { time: '오전 · 참여 30명', title: 'AI 자율주행차 부트 캠프', description: '초음파 센서와 메카넘휠 제어로 AI 자율주행 원리를 배우고 코딩 미션을 수행했습니다.' },
-        { time: '오전 · 참여 30명', title: '뚝딱 AI 메이커톤: 생각을 작품으로', description: '생성형 AI 활용법을 배우고 일상 문제를 해결하는 결과물을 제작·발표하는 PBL 활동을 진행했습니다.' },
-        { time: '오후 · 참여 27명', title: '레고 에듀케이션 CS & AI', description: 'AI 비전 센서를 학습시키고 로봇 제어 로직을 배우며 자율주행의 핵심 원리를 탐구했습니다.' },
-        { time: '오후 · 참여 30명', title: '메카트로닉스 시스템을 활용한 로보틱스', description: '산업 현장의 자동화 기기를 제작하며 작동 원리를 배우고 로보틱스로 문제를 해결했습니다.' }
-      ],
-      note: '현장 사진은 학생 초상권 공개 동의 확인 후 게재 예정입니다.',
-      inquiry: '학생 AI 체험'
-    },
-    remote: {
-      kicker: '교원 연수 · 원격교육',
-      title: '교육부 인가 원격교육연수원 직무연수 제작 및 실시간 연수 운영',
-      body: [
-        '교원의 실제 수업 활용을 중심으로 다양한 직무연수 콘텐츠를 기획·제작하고, 실시간 온라인 연수를 운영해왔습니다.',
-        '연수 주제 선정부터 강사 섭외, 콘텐츠 구성, 촬영·운영까지 연수 제작의 전 과정을 체계적으로 지원합니다.'
-      ],
-      facts: [['대상', '교원'], ['프로그램', '원격 직무연수 콘텐츠 제작 · 실시간 온라인 연수'], ['운영 범위', '주제 선정 · 강사 섭외 · 콘텐츠 구성 · 촬영 · 운영']],
-      inquiry: '원격 직무연수·콘텐츠'
-    },
-    keris: {
-      kicker: '학교 컨설팅',
-      title: 'KERIS 찾아가는 학교 컨설팅 다수 운영',
-      body: [
-        '학교 현장의 디지털 전환과 AI·에듀테크 활용을 지원하기 위한 찾아가는 학교 컨설팅을 다수 운영했습니다.',
-        '학교별 환경과 교원의 요구를 반영한 현장 중심 프로그램으로, 실제 수업과 학교 운영에 적용할 수 있는 실질적인 컨설팅을 제공합니다.'
-      ],
-      facts: [['대상', '학교 및 교원'], ['프로그램', '디지털 전환 · AI·에듀테크 활용 현장 컨설팅'], ['운영 범위', '학교 방문 · 현장 맞춤 컨설팅']],
-      inquiry: '학교 컨설팅'
-    },
-    community: {
-      kicker: '교원 커뮤니티 · 플랫폼',
-      title: 'AI미래교육연구회 연수 운영 및 갓쌤연수원 사이트 위탁 운영',
-      body: [
-        'AI·디지털 교육에 관심 있는 교원들을 대상으로 다양한 전문 연수를 운영하고 있습니다.',
-        '교원 연수 플랫폼인 갓쌤연수원 사이트 위탁 운영을 통해 연수 콘텐츠와 교원을 지속적으로 연결하고 있습니다.'
-      ],
-      facts: [['대상', 'AI·디지털 교육에 관심 있는 교원'], ['프로그램', 'AI미래교육연구회 연수 · 갓쌤연수원 위탁 운영'], ['운영 범위', '연수 운영 · 플랫폼 위탁 운영']],
-      inquiry: '교원 연수'
-    }
-  };
+  if (photoDialog) photoDialog.addEventListener('close', function () { photoImg.removeAttribute('src'); });
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-
-  var caseDialog = $('#caseDialog');
-  var caseContent = $('#caseDialogContent');
-  function renderCase(key) {
-    var c = CASES[key];
-    if (!c) return;
-    var html = '';
-    if (c.image) html += '<img class="dialog-image" src="' + esc(c.image.src) + '" alt="' + esc(c.image.alt) + '">';
-    html += '<div class="dialog-body">';
-    html += '<span class="case-kicker">' + esc(c.kicker) + '</span>';
-    html += '<h2 id="caseDialogTitle">' + esc(c.title) + '</h2>';
-    c.body.forEach(function (p) { html += '<p>' + esc(p) + '</p>'; });
-    html += '<dl class="facts">';
-    c.facts.forEach(function (f) { html += '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; });
-    html += '</dl>';
-    if (c.programs && c.programs.length) {
-      html += '<section class="case-programs"><h3>프로그램별 구성</h3><ol class="case-program-list">';
-      c.programs.forEach(function (program) {
-        html += '<li><span class="case-program-meta">' + esc(program.time) + '</span><strong>' + esc(program.title) + '</strong><p>' + esc(program.description) + '</p></li>';
-      });
-      html += '</ol></section>';
-    }
-    if (c.note) html += '<p class="dialog-small">' + esc(c.note) + '</p>';
-    html += '<button type="button" class="btn btn-primary" data-case-inquiry="' + esc(c.inquiry) + '">비슷한 프로그램 문의하기 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>';
-    html += '</div>';
-    caseContent.innerHTML = html;
-    openDialog(caseDialog);
-  }
-  $$('[data-case]').forEach(function (btn) {
-    btn.addEventListener('click', function () { renderCase(btn.getAttribute('data-case')); });
-  });
-  caseContent.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-case-inquiry]');
-    if (!b) return;
-    pendingInquiry = b.getAttribute('data-case-inquiry');
-    caseDialog.close();
-  });
 
   /* ---------------- config.js 기반 연락처 / 사업자 정보 ---------------- */
   (function applyConfig() {
@@ -301,7 +237,7 @@
     if (CFG.inquiryEmail) items.push(['이메일', '<a href="mailto:' + esc(CFG.inquiryEmail) + '">' + esc(CFG.inquiryEmail) + '</a>']);
     if (CFG.phone) items.push(['전화', '<a href="tel:' + esc(CFG.phone.replace(/[^\d+]/g, '')) + '">' + esc(CFG.phone) + '</a>']);
     if (CFG.businessHours) items.push(['운영 시간', esc(CFG.businessHours)]);
-    if (items.length) {
+    if (direct && items.length) {
       direct.innerHTML = items.map(function (it) {
         return '<div class="direct-item"><span class="direct-label">' + it[0] + '</span><strong>' + it[1] + '</strong></div>';
       }).join('');
@@ -309,7 +245,9 @@
     }
 
     var fc = $('#footerContact');
-    if (CFG.inquiryEmail) fc.insertAdjacentHTML('afterbegin', '<li><a href="mailto:' + esc(CFG.inquiryEmail) + '">' + esc(CFG.inquiryEmail) + '</a></li>');
+    $$('[data-inquiry-email]').forEach(function (link) {
+      link.href = 'mailto:' + CFG.inquiryEmail; link.textContent = CFG.inquiryEmail;
+    });
     if (CFG.phone) fc.insertAdjacentHTML('afterbegin', '<li><a href="tel:' + esc(CFG.phone.replace(/[^\d+]/g, '')) + '">' + esc(CFG.phone) + '</a></li>');
 
     var biz = [];
@@ -339,10 +277,12 @@
       });
     }
     $('#year').textContent = String(new Date().getFullYear());
+    if (CFG.responseTime && direct) direct.insertAdjacentHTML('beforeend', '<p class="field-help">' + esc(CFG.responseTime) + '</p>');
   })();
 
   /* ---------------- 문의 폼 ---------------- */
   var form = $('#inquiryForm');
+  if (!form) return;
   var formBody = $('#formBody');
   var formSuccess = $('#formSuccess');
   var formStatus = $('#formStatus');
@@ -351,9 +291,38 @@
   // 공통 수집·이용 동의는 필수 정보와 사용자가 입력한 선택 정보에 적용합니다.
   function hasOptionalConsent() { return !!(collectionConsent && collectionConsent.checked); }
 
-  var LABELS = { org: '기관명', name: '담당자명', phone: '연락처', email: '이메일', type: '문의 유형', target: '연수 대상', topic: '희망 주제', headcount: '예상 인원', schedule: '희망 일정', message: '상세 내용' };
+  var LABELS = { org: '기관명', name: '담당자명', phone: '연락처', email: '이메일', type: '문의 유형', target: '교육 대상', topic: '희망 주제', headcount: '예상 인원', schedule: '희망 일정', message: '상세 내용' };
   var PHONE_RE = /^(0\d{1,2})-?(\d{3,4})-?(\d{4})$/;
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function labelsForType(type) {
+    var labels = Object.assign({}, LABELS);
+    var lms = type === '강의 전용 LMS 구축';
+    var event = type === '교육행사 운영';
+    labels.target = lms ? '이용 대상' : event ? '참가 대상' : '교육 대상';
+    labels.topic = lms ? '필요 기능' : event ? '행사 주제' : '희망 주제';
+    labels.headcount = lms ? '예상 이용 규모' : '예상 인원';
+    labels.schedule = lms ? '희망 구축 일정' : '희망 일정';
+    return labels;
+  }
+
+  function updateInquiryContext() {
+    var lms = typeSelect.value === '강의 전용 LMS 구축';
+    var event = typeSelect.value === '교육행사 운영';
+    var student = typeSelect.value === '학생교육 프로그램';
+    var labels = labelsForType(typeSelect.value);
+    ['target', 'topic', 'headcount', 'schedule'].forEach(function (id) {
+      $('#' + id + 'Label').textContent = labels[id];
+    });
+    $('#optionalTitle').textContent = lms ? '기능·운영 규모 알려주기' : event ? '행사 조건 알려주기' : '상담에 필요한 정보 더하기';
+    $('#topic').placeholder = lms ? '예) 과정 등록, 수강 신청, 진도 확인' : event ? '예) AI 체험 박람회, 해커톤' : '예) 생성형 AI 수업 활용';
+    $('#target').placeholder = lms ? '예) 교원 연수 수강자 / 기관 내부 직원' : event ? '예) 학생 / 교원 / 교육기관 담당자' : student ? '예) 초등 5~6학년 / 중학생' : '예) 초등 교원 / 교사 학습공동체';
+    $('#headcount').placeholder = lms ? '예) 학습자 200명' : '예) 30명';
+    $('#message').placeholder = lms ? '현재 운영 방식, 필요한 기능, 콘텐츠 분량, 유지관리 범위 등 정해진 내용을 적어주세요.' : '교육 목적, 운영 방식, 장소, 예산 범위 등 정해진 내용을 자유롭게 적어주세요.';
+    $('#inquiryHint').textContent = lms ? '필요 기능과 예상 학습자 수, 희망 구축 일정을 알려주세요. 세부 범위는 상담에서 정합니다.' : event ? '행사 목적과 장소, 예상 규모가 정해졌다면 알려주세요.' : '대상·주제·인원·일정 중 정해진 내용만 알려주세요.';
+  }
+  typeSelect.addEventListener('change', updateInquiryContext);
+  updateInquiryContext();
 
   // 연락처 자동 하이픈
   phone.addEventListener('input', function () {
@@ -415,6 +384,12 @@
   });
 
   var optionalIds = ['phone', 'target', 'topic', 'headcount', 'schedule', 'message'];
+  function updateOptionalCount() {
+    var count = optionalIds.filter(function (id) { return $('#' + id).value.trim(); }).length;
+    $('#optionalCount').textContent = count ? '선택 · ' + count + '개 작성' : '선택';
+  }
+  optionalIds.forEach(function (id) { $('#' + id).addEventListener('input', updateOptionalCount); });
+  updateOptionalCount();
 
   function collect() {
     var data = {};
@@ -428,8 +403,9 @@
 
   function buildText(d) {
     var lines = ['[쌤픽에듀 연수·사업 문의]', ''];
+    var labels = labelsForType(d.type);
     Object.keys(LABELS).forEach(function (id) {
-      if (d[id]) lines.push(LABELS[id] + ': ' + d[id]);
+      if (d[id]) lines.push(labels[id] + ': ' + d[id]);
     });
     lines.push('', '— ' + location.href.split('#')[0] + ' 문의 양식에서 작성');
     return lines.join('\n');
@@ -452,7 +428,10 @@
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     if (submitting || !receptionReady) return;
-    if ($('#website').value) return;
+    if ($('#website').value) {
+      formStatus.textContent = '자동 입력된 정보 때문에 접수를 진행하지 못했습니다. 페이지를 새로 연 뒤 직접 입력하거나 ' + CFG.inquiryEmail + '로 문의해 주세요.';
+      return;
+    }
 
     var firstBad = null;
     required.forEach(function (input) {
@@ -460,6 +439,8 @@
     });
     if (firstBad) {
       formStatus.textContent = '입력 내용을 확인해 주세요. ' + (errorEl(firstBad) ? errorEl(firstBad).textContent : '');
+      var collapsed = firstBad.closest('details');
+      if (collapsed) collapsed.open = true;
       firstBad.focus();
       return;
     }
@@ -494,8 +475,9 @@
       }
       mailAccepted = true;
       lastText = buildText(d);
+      var labels = labelsForType(d.type);
       $('#summary').innerHTML = Object.keys(LABELS).filter(function (id) { return d[id]; }).map(function (id) {
-        return '<div><dt>' + esc(LABELS[id]) + '</dt><dd>' + esc(d[id]) + '</dd></div>';
+        return '<div><dt>' + esc(labels[id]) + '</dt><dd>' + esc(d[id]) + '</dd></div>';
       }).join('');
       $('#successDesc').textContent = '문의 메일 발송 요청이 완료되었습니다. 담당자가 확인 후 입력하신 이메일로 연락드립니다.';
       copyStatus.textContent = '';
@@ -503,12 +485,22 @@
       formSuccess.hidden = false;
       $('#successTitle').focus();
     } catch (err) {
+      var contactHelp = ' 입력 내용은 유지됩니다. 도움이 필요하면 ' + CFG.inquiryEmail + '로 문의해 주세요.';
+      var errors = {
+        RATE_LIMIT: '같은 이메일로 조금 전 문의를 접수했습니다. 1분 뒤 다시 시도해 주세요.',
+        QUOTA: '오늘의 자동 접수 한도에 도달했습니다. 이메일로 문의해 주세요.',
+        BUSY: '다른 문의를 처리하고 있습니다. 잠시 후 다시 시도해 주세요.',
+        INVALID: '입력 정보 또는 동의 문서가 변경되었습니다. 내용을 확인하고, 계속 실패하면 새 페이지에서 다시 작성해 주세요.',
+        EXPIRED: '접수 연결의 유효 시간이 지났습니다. 다시 문의하기를 눌러 주세요.',
+        NOT_CONFIGURED: '자동 접수 연결을 준비 중입니다. 이메일로 문의해 주세요.',
+        BRIDGE_TIMEOUT: '접수 시스템에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요.',
+        BRIDGE_LOAD_FAILED: '접수 시스템에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요.'
+      };
       formStatus.textContent = mailAccepted ? '문의 메일 발송 요청은 완료되었으나 완료 화면을 표시하지 못했습니다. 다시 제출하지 마세요.' :
-        err.code === 'BRIDGE_TIMEOUT' || err.code === 'BRIDGE_LOAD_FAILED' ?
-        '문의 전송 연결을 시작하지 못했습니다. 사이트 주소 설정 또는 Apps Script 배포 상태를 확인해야 합니다. 입력 내용은 유지됩니다.' :
+        errors[err.code] ? errors[err.code] + contactHelp :
         err.name === 'TimeoutError' || err instanceof TypeError ?
-        '접수 결과를 확인하지 못했습니다. 이미 전송됐을 수 있으므로 재접수 전 ij7404613@gmail.com으로 확인해 주세요. 입력 내용은 유지됩니다.' :
-        '접수를 완료하지 못했습니다. 입력 내용을 유지했습니다. 잠시 후 다시 시도하거나 ij7404613@gmail.com으로 문의해 주세요.';
+        '접수 결과를 확인하지 못했습니다. 이미 전송됐을 수 있으므로 재접수 전 ' + CFG.inquiryEmail + '로 확인해 주세요. 입력 내용은 유지됩니다.' :
+        '접수를 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.' + contactHelp;
     } finally {
       submitting = false;
       submitBtn.disabled = !receptionReady;
@@ -556,6 +548,9 @@
 
   $('#editBtn').addEventListener('click', function () {
     form.reset();
+    $('#optionalFields').open = false;
+    updateInquiryContext();
+    updateOptionalCount();
     submissionId = '';
     submissionFingerprint = '';
     required.forEach(clearError);
