@@ -1,5 +1,12 @@
-# Google Apps Script deployment files and local clasp settings
-/apps-script/
+# Local credentials and source material must never ship.
 .clasp.json
 .clasprc.json
-README.md
+.DS_Store
+**/.DS_Store
+/.kilo/
+/client-imgset/
+/private-source/
+/dist/
+/fix-*
+/review/
+__pycache__/
