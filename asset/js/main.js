@@ -232,23 +232,13 @@
 
   /* ---------------- config.js 기반 연락처 / 사업자 정보 ---------------- */
   (function applyConfig() {
-    var direct = $('#contactDirect');
-    var items = [];
-    if (CFG.inquiryEmail) items.push(['이메일', '<a href="mailto:' + esc(CFG.inquiryEmail) + '">' + esc(CFG.inquiryEmail) + '</a>']);
-    if (CFG.phone) items.push(['전화', '<a href="tel:' + esc(CFG.phone.replace(/[^\d+]/g, '')) + '">' + esc(CFG.phone) + '</a>']);
-    if (CFG.businessHours) items.push(['운영 시간', esc(CFG.businessHours)]);
-    if (direct && items.length) {
-      direct.innerHTML = items.map(function (it) {
-        return '<div class="direct-item"><span class="direct-label">' + it[0] + '</span><strong>' + it[1] + '</strong></div>';
-      }).join('');
-      direct.hidden = false;
-    }
-
     var fc = $('#footerContact');
     $$('[data-inquiry-email]').forEach(function (link) {
       link.href = 'mailto:' + CFG.inquiryEmail; link.textContent = CFG.inquiryEmail;
     });
     if (CFG.phone) fc.insertAdjacentHTML('afterbegin', '<li><a href="tel:' + esc(CFG.phone.replace(/[^\d+]/g, '')) + '">' + esc(CFG.phone) + '</a></li>');
+    if (CFG.businessHours) fc.insertAdjacentHTML('beforeend', '<li>운영 시간: ' + esc(CFG.businessHours) + '</li>');
+    if (CFG.responseTime) fc.insertAdjacentHTML('beforeend', '<li>' + esc(CFG.responseTime) + '</li>');
 
     var biz = [];
     if (CFG.legalName) biz.push('상호: ' + esc(CFG.legalName));
@@ -277,7 +267,6 @@
       });
     }
     $('#year').textContent = String(new Date().getFullYear());
-    if (CFG.responseTime && direct) direct.insertAdjacentHTML('beforeend', '<p class="field-help">' + esc(CFG.responseTime) + '</p>');
   })();
 
   /* ---------------- 문의 폼 ---------------- */

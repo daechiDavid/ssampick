@@ -226,10 +226,6 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .steps span { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
 .steps strong { display: block; font-size: 16px; color: var(--navy-ink); }
 .steps p { font-size: 14px; color: var(--muted); margin-top: 2px; }
-.contact-direct { display: grid; gap: 10px; margin-top: 30px; }
-.direct-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); }
-.direct-label { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .05em; }
-.direct-item strong { font-size: 16px; color: var(--navy); }
 .contact-form { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; }
 .form-row { display: grid; gap: 16px; }
 .form-row.two { grid-template-columns: 1fr 1fr; }
@@ -269,6 +265,7 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .footer-cols h4 { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 14px; }
 .footer-cols li { font-size: 14px; margin-bottom: 8px; }
+#footerContact { min-width: 0; overflow-wrap: anywhere; }
 .footer-cols a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.12); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: 13px; color: #8ea3bd; }
 .biz { display: flex; flex-wrap: wrap; gap: 6px 18px; }
@@ -520,8 +517,6 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .optional-fields > summary span { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 8px; }
 .optional-content { padding: 0 16px 4px; }
 .field-help { font-size: 14px; color: var(--ink-2); margin-bottom: 18px; }
-.direct-item { flex-wrap: wrap; }
-.direct-item a { overflow-wrap: anywhere; }
 .error-page { min-height: 65vh; display: flex; align-items: center; }
 @media (max-width: 960px) {
   .business-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
