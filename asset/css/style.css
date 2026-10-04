@@ -182,7 +182,7 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .facts div { display: grid; grid-template-columns: 76px 1fr; gap: 12px; font-size: 14px; }
 .facts dt { color: var(--muted); font-weight: 600; }
 .facts dd { color: var(--ink); font-weight: 600; }
-.case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.case-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: start; gap: 20px; }
 .case { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .case-visual-image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .case-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 12px; }
@@ -506,7 +506,8 @@ h1, h2, h3, h4, p, dl, dd, figure { margin: 0; }
 .business-guide { padding-top: 0; }
 .case-more { border-top: 1px solid var(--line); padding-top: 8px; }
 .case-more summary { cursor: pointer; padding: 12px 0; min-height: 44px; font-weight: 700; color: var(--navy); }
-.case-more > div { display: grid; gap: 16px; padding: 8px 0 16px; }
+.case-more > div { display: none; }
+.case-more[open] > div { display: grid; gap: 16px; padding: 8px 0 16px; }
 .case-more p { font-size: 15px; color: var(--ink-2); }
 .case-program-list { display: grid; gap: 16px; }
 .case-program-list li { display: grid; gap: 6px; border-left: 2px solid var(--line); padding-left: 16px; }
